@@ -1,6 +1,7 @@
 {
   "name": "nobot-front",
   "version": "0.1.0",
+  "description": "A web interface for nobot.",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.18",
@@ -16,7 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --single-quote --print-width 120 --parser typescript --write \"{src,test}/**/*.{ts,tsx}\"",
+    "lint": "yarn prettier && eslint \"{src, test}/**/*.ts\" && eslint \"{src, test}/**/*.tsx\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,6 +34,36 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ucandoit/nobot-front.git"
+  },
+  "keywords": [
+    "React",
+    "Nobunyaganoyabo"
+  ],
+  "author": "ZHAO Yukan <yukan.zhao@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ucandoit/nobot-front/issues"
+  },
+  "homepage": "https://github.com/Ucandoit/nobot-front#readme",
+  "devDependencies": {
+    "husky": "^3.0.8",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "yarn lint",
+      "git add"
     ]
   }
 }
