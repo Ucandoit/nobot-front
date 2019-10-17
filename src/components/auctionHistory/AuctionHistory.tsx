@@ -4,7 +4,7 @@ import * as request from 'superagent';
 const AuctionHistory: React.FC = props => {
   const [histories, setHistories] = React.useState([]);
   React.useEffect(() => {
-    request.get('/nobot-backend/api/rest/auctionHistories').then(res => {
+    request.get(`${ROOT_API}/api/rest/auctionHistories`).then(res => {
       setHistories(res.body._embedded.auctionHistories);
     });
   }, []);

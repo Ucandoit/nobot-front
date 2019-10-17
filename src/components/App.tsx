@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import AuctionHistory from './auctionHistory/AuctionHistory';
+import DashBoard from './dashboard/Dashboard';
 
 const App: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ const App: React.FC = () => {
       <div className="App">
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Dashboard</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
@@ -20,7 +21,7 @@ const App: React.FC = () => {
         </ul>
         <Switch>
           <Route exact path="/">
-            <div>Home</div>
+            <DashBoard />
           </Route>
           <Route path="/about">
             <div>About</div>
