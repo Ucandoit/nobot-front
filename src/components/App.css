@@ -20,3 +20,21 @@
 .App-link {
   color: #09d3ac;
 }
+
+.warList .row > span {
+  display: inline-block;
+  width: 130px;
+}
+
+.warList .row > span .pc {
+  height: 10px;
+}
+
+.warList .row > span.clickable {
+  cursor: pointer;
+}
+
+.warList .row > span .action {
+  vertical-align: bottom;
+  cursor: pointer;
+}
