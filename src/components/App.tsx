@@ -6,6 +6,7 @@ import DashBoard from './dashboard/Dashboard';
 import Accounts from './accounts/Accounts';
 import Account from './accounts/Account';
 import WarList from './war/WarList';
+import Story from './story/Story';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,9 @@ const App: React.FC = () => {
           <li>
             <Link to="/auction_history">Auction History</Link>
           </li>
+          <li>
+            <Link to="/story">Story</Link>
+          </li>
         </ul>
         <Switch>
           <Route exact path="/">
@@ -40,6 +44,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/auction_history">
             <AuctionHistory />
+          </Route>
+          <Route path="/story">
+            <Story />
           </Route>
         </Switch>
       </div>
