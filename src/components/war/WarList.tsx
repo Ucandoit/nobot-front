@@ -4,8 +4,15 @@ import WarStatus from './WarStatus';
 
 const WarList: React.FC = props => {
   const [accounts, setAccounts] = React.useState([]);
+  const [endDate, setEndDate] = React.useState('');
   React.useEffect(() => {
     loadList();
+  }, []);
+
+  React.useEffect(() => {
+    request.get(`${ROOT_API}/api/rest/parameters/war.lastDay`).then(res => {
+      setEndDate(res.body.value);
+    });
   }, []);
 
   const loadList = () => {
@@ -55,9 +62,25 @@ const WarList: React.FC = props => {
     request.get(`${ROOT_API}/api/rest/war/npc/${login}/${!npc}`).then(() => loadList());
   };
 
+  const onEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(event.target.value);
+  };
+
+  const changeEndDate = () => {
+    request
+      .patch(`${ROOT_API}/api/rest/parameters/war.lastDay`)
+      .set('Content-Type', 'application/json')
+      .send({ value: endDate })
+      .then(res => {});
+  };
+
   return (
     <div className="warList">
       <h1>War</h1>
+      <div>
+        End date: <input type="text" value={endDate} onChange={onEndDateChange} />{' '}
+        <button onClick={changeEndDate}>Change</button>
+      </div>
       <button onClick={checkWar}>Check war status</button>
       <button onClick={startAll}>Start All</button>
       <button onClick={stopAll}>Stop All</button>
