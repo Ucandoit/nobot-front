@@ -8,6 +8,7 @@ import Account from './accounts/Account';
 import WarList from './war/WarList';
 import Story from './story/Story';
 import DrawCard from './drawCard/DrawCard';
+import RecruitSystem from './recruit/RecruitSystem';
 
 const App: React.FC = () => {
   return (
@@ -32,6 +33,9 @@ const App: React.FC = () => {
           <li>
             <Link to="/draw_card">DrawCard</Link>
           </li>
+          <li>
+            <Link to="/recruit">Recruit</Link>
+          </li>
         </ul>
         <Switch>
           <Route exact path="/">
@@ -54,6 +58,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/draw_card">
             <DrawCard />
+          </Route>
+          <Route path="/recruit">
+            <RecruitSystem />
           </Route>
         </Switch>
       </div>
