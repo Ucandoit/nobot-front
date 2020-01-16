@@ -42,3 +42,8 @@
 table {
   margin: auto;
 }
+
+.drawCardList .row > span {
+  display: inline-block;
+  width: 150px;
+}
