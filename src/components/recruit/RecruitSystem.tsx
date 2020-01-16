@@ -2,6 +2,7 @@ import React from 'react';
 import * as request from 'superagent';
 
 const RecruitSystem: React.FC = props => {
+  const [tutorial, setTutorial] = React.useState<string>('');
   const [target, setTarget] = React.useState<string>('');
   const [source, setSource] = React.useState<string>('');
   const [logins, setLogins] = React.useState<string[]>([]);
@@ -10,6 +11,10 @@ const RecruitSystem: React.FC = props => {
       setLogins(res.body._embedded.accounts.map((account: any) => account.login));
     });
   }, []);
+
+  const onTutorialChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setTutorial(event.target.value);
+  };
 
   const onTargetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTarget(event.target.value);
@@ -26,12 +31,28 @@ const RecruitSystem: React.FC = props => {
   };
 
   const claimInviterReward = (login: string) => {
-    request.get(`${ROOT_API}/api/rest/account//recruit/inviterReward/${login}`).then(res => {});
+    request.get(`${ROOT_API}/api/rest/account/recruit/inviterReward/${login}`).then(res => {});
+  };
+
+  const startTutorial = () => {
+    request.get(`${ROOT_API}/api/rest/tutorial/start/${tutorial}`).then(res => {});
   };
 
   return (
     <div>
       <h1>Recruit</h1>
+      <div>
+        <label>Tutorial: </label>
+        <select value={tutorial} onChange={onTutorialChange}>
+          <option value="">-</option>
+          {logins.map(login => (
+            <option key={login} value={login}>
+              {login}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button onClick={startTutorial}>Start tutorial</button>
       <div>
         <label>Target: </label>
         <select value={target} onChange={onTargetChange}>

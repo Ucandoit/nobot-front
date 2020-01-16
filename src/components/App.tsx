@@ -9,6 +9,7 @@ import WarList from './war/WarList';
 import Story from './story/Story';
 import DrawCard from './drawCard/DrawCard';
 import RecruitSystem from './recruit/RecruitSystem';
+import AccountForm from './accounts/AccountForm';
 
 const App: React.FC = () => {
   return (
@@ -46,6 +47,9 @@ const App: React.FC = () => {
           </Route>
           <Route path={`/accounts/:login`}>
             <Account />
+          </Route>
+          <Route path={`/account/create`}>
+            <AccountForm isCreate={true} />
           </Route>
           <Route path="/war">
             <WarList />

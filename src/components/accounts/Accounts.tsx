@@ -13,6 +13,7 @@ const Accounts: React.FC = props => {
   return (
     <div>
       <h1>Auction History</h1>
+      <Link to="/account/create">Create</Link>
       {accounts.map((account: any, index: number) => (
         <div key={index}>
           <span style={{ marginRight: '10px' }}>{account.login}</span>
