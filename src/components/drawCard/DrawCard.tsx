@@ -19,8 +19,8 @@ const DrawCard: React.FC = props => {
     });
   };
 
-  const drawFukubiki = (login: string) => {
-    request.get(`${ROOT_API}/api/rest/account/draw/${login}/0`).then(res => {});
+  const drawCard = (login: string, type: number) => {
+    request.get(`${ROOT_API}/api/rest/account/draw/${login}/${type}`).then(res => {});
   };
 
   return (
@@ -30,10 +30,14 @@ const DrawCard: React.FC = props => {
       {drawStatusList.map((drawStatus: any) => (
         <div className="row" key={drawStatus.login}>
           <span>{drawStatus.login}</span>
-          <span>{drawStatus.fuNumber}</span>
-          <span>{drawStatus.jiNumber}</span>
           <span>
-            {drawStatus.fukubikiNumber} <button onClick={() => drawFukubiki(drawStatus.login)}>Fukubiki</button>
+            {drawStatus.fuNumber} <button onClick={() => drawCard(drawStatus.login, 5)}>Fu</button>
+          </span>
+          <span>
+            {drawStatus.jiNumber} <button onClick={() => drawCard(drawStatus.login, 4)}>Ji</button>
+          </span>
+          <span>
+            {drawStatus.fukubikiNumber} <button onClick={() => drawCard(drawStatus.login, 0)}>Fukubiki</button>
           </span>
         </div>
       ))}
