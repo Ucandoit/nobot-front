@@ -5,10 +5,16 @@ import { Link } from 'react-router-dom';
 const Accounts: React.FC = props => {
   const [accounts, setAccounts] = React.useState([]);
   React.useEffect(() => {
-    request.get(`${ROOT_API}/api/rest/accounts?size=50`).then(res => {
+    request.get(`${ROOT_API}/api/rest/accounts?size=50&sort=login,asc`).then(res => {
       setAccounts(res.body._embedded.accounts);
     });
   }, []);
+
+  const getReserveCards = (login: string) => {
+    request.get(`${ROOT_API}/api/rest/account/reserveCards/${login}`).then(res => {
+      alert(JSON.stringify(res.body));
+    });
+  };
 
   return (
     <div>
@@ -18,6 +24,9 @@ const Accounts: React.FC = props => {
         <div key={index}>
           <span style={{ marginRight: '10px' }}>{account.login}</span>
           <span style={{ marginRight: '10px' }}>{account.name}</span>
+          <span>
+            <button onClick={() => getReserveCards(account.login)}>ReserveCards</button>
+          </span>
           <span>
             <Link to={`/accounts/${account.login}`}>Config</Link>
           </span>
