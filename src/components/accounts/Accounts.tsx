@@ -10,12 +10,6 @@ const Accounts: React.FC = props => {
     });
   }, []);
 
-  const getReserveCards = (login: string) => {
-    request.get(`${ROOT_API}/api/rest/account/reserveCards/${login}`).then(res => {
-      alert(JSON.stringify(res.body));
-    });
-  };
-
   return (
     <div>
       <h1>Auction History</h1>
@@ -25,10 +19,7 @@ const Accounts: React.FC = props => {
           <span style={{ marginRight: '10px' }}>{account.login}</span>
           <span style={{ marginRight: '10px' }}>{account.name}</span>
           <span>
-            <button onClick={() => getReserveCards(account.login)}>ReserveCards</button>
-          </span>
-          <span>
-            <Link to={`/accounts/${account.login}`}>Config</Link>
+            <Link to={`/accounts/${account.login}`}>Detail</Link>
           </span>
         </div>
       ))}
