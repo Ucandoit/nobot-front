@@ -18,6 +18,7 @@ const Accounts: React.FC = props => {
         <div key={index}>
           <span style={{ marginRight: '10px' }}>{account.login}</span>
           <span style={{ marginRight: '10px' }}>{account.name}</span>
+          <span style={{ marginRight: '10px' }}>{account.np}</span>
           <span>
             <Link to={`/accounts/${account.login}`}>Detail</Link>
           </span>

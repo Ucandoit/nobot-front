@@ -20,11 +20,17 @@ const Account: React.FC = props => {
   return (
     <div className="account-detail">
       {reserveCards.map(card => (
-        <div key={card.id}>
-          <img src={card.imgUrl} alt="" />
-          {card.name}
-          {card.tradable ? null : <img src={process.env.PUBLIC_URL + '/lock.png'} alt="" />}
-        </div>
+        <React.Fragment key={card.id}>
+          <div>
+            {card.rarity}
+            <img src={card.imgUrl} alt="" />
+            {card.name}
+            {card.tradable ? null : <img src={process.env.PUBLIC_URL + '/lock.png'} alt="" />} {card.skill1}{' '}
+            {card.skill2} {card.skill3} {card.refineTotal} {card.refineAtk} {card.refineDef} {card.refineSpd}{' '}
+            {card.refineVir} {card.refineStg}
+          </div>
+          <div></div>
+        </React.Fragment>
       ))}
     </div>
   );
