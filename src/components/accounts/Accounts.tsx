@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Accounts: React.FC = props => {
   const [accounts, setAccounts] = React.useState([]);
   React.useEffect(() => {
-    request.get(`${ROOT_API}/api/rest/accounts?size=50&sort=login,asc`).then(res => {
+    request.get(`${ROOT_API}/api/rest/accounts?size=200&sort=login,asc`).then(res => {
       setAccounts(res.body._embedded.accounts);
     });
   }, []);

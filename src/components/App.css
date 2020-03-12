@@ -48,7 +48,18 @@ table {
   width: 150px;
 }
 
-.account-detail img {
-  width: 20px;
-  vertical-align: sub;
+.deck-group, .reserve-group {
+  width: 600px;
+  margin: auto;
+  text-align: left;
+}
+
+.card {
+  width: 20%;
+  display: inline-block;
+}
+
+.card .card-name {
+  display: block;
+  font-size: 12px;
 }

@@ -1,37 +1,58 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import * as request from 'superagent';
-import { CardInfo } from '../../helpers/types';
+import { AccountInfo } from '../../helpers/types';
+import Card from '../card/Card';
 
 const Account: React.FC = props => {
   const { login } = useParams();
+  const [accountInfo, setAccountInfo] = React.useState<AccountInfo | null>(null);
 
-  const [reserveCards, setReserveCards] = React.useState<CardInfo[]>([]);
+  const getAccountInfo = async () => {
+    const response = await request.get(`${ROOT_API}/api/rest/account/info/${login}`);
+    setAccountInfo(response.body);
+  };
 
   React.useEffect(() => {
-    const getReserveCards = async () => {
-      const res = await request.get(`${ROOT_API}/api/rest/account/reserveCards/${login}`);
-      setReserveCards(res.body);
-    };
-    getReserveCards();
+    getAccountInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="account-detail">
-      {reserveCards.map(card => (
-        <React.Fragment key={card.id}>
+      {accountInfo ? (
+        <React.Fragment>
           <div>
-            {card.rarity}
-            <img src={card.imgUrl} alt="" />
-            {card.name}
-            {card.tradable ? null : <img src={process.env.PUBLIC_URL + '/lock.png'} alt="" />} {card.skill1}{' '}
-            {card.skill2} {card.skill3} {card.refineTotal} {card.refineAtk} {card.refineDef} {card.refineSpd}{' '}
-            {card.refineVir} {card.refineStg}
+            <span>{`火: ${accountInfo.fire}/${accountInfo.maxFire} `}</span>
+            <span>{`地: ${accountInfo.earth}/${accountInfo.maxEarth} `}</span>
+            <span>{`風: ${accountInfo.wind}/${accountInfo.maxWind} `}</span>
+            <span>{`水: ${accountInfo.water}/${accountInfo.maxWater} `}</span>
+            <span>{`空: ${accountInfo.sky}/${accountInfo.maxSky} `}</span>
+            <span>{`兵糧: ${accountInfo.food}/${accountInfo.maxFood} `}</span>
+            <span>{`Np: ${accountInfo.np}`}</span>
           </div>
-          <div></div>
+          <table>
+            <tbody>
+              {[0, 1, 2, 3, 4].map(y => {
+                const row = accountInfo.areas
+                  .filter(area => area.y === y)
+                  .map(area => <td key={area.x}>{`${area.title} Lv.${area.level} `}</td>);
+                return <tr key={y}>{row}</tr>;
+              })}
+            </tbody>
+          </table>
+          <div className="deck-group">
+            {accountInfo.deckCards.map(card => (
+              <Card key={card.id} name={card.name} imgUrl={card.imgUrl} tradable={card.tradable} />
+            ))}
+          </div>
+          <div className="reserve-group">
+            {accountInfo.reserveCards.map(card => (
+              <Card key={card.id} name={card.name} imgUrl={card.imgUrl} tradable={card.tradable} />
+            ))}
+          </div>
         </React.Fragment>
-      ))}
+      ) : null}
     </div>
   );
 };
