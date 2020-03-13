@@ -44,4 +44,6 @@ export interface MapArea {
   level: number;
   x: number;
   y: number;
+  constructing: boolean;
+  running: boolean;
 }

@@ -31,12 +31,17 @@ const Account: React.FC = props => {
             <span>{`兵糧: ${accountInfo.food}/${accountInfo.maxFood} `}</span>
             <span>{`Np: ${accountInfo.np}`}</span>
           </div>
-          <table>
+          <table className="map">
             <tbody>
               {[0, 1, 2, 3, 4].map(y => {
                 const row = accountInfo.areas
                   .filter(area => area.y === y)
-                  .map(area => <td key={area.x}>{`${area.title} Lv.${area.level} `}</td>);
+                  .map(area => (
+                    <td
+                      key={area.x}
+                      className={`${area.constructing ? 'constructing' : ''} ${area.running ? 'running' : ''}`}
+                    >{`${area.title} Lv.${area.level} `}</td>
+                  ));
                 return <tr key={y}>{row}</tr>;
               })}
             </tbody>

@@ -63,3 +63,11 @@ table {
   display: block;
   font-size: 12px;
 }
+
+.map td.constructing {
+  border: 1px solid red;
+}
+
+.map td.running {
+  border: 1px solid blue;
+}
