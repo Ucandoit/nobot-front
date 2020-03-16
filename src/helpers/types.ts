@@ -1,7 +1,10 @@
 export interface CardInfo {
   id: string;
   name: string;
+  realName: string;
   rarity: string;
+  property: string;
+  military: Military;
   tradable: boolean;
   imgUrl: string;
   refineTotal: string;
@@ -14,7 +17,6 @@ export interface CardInfo {
   skill2: string;
   skill3: string;
 }
-
 export interface AccountInfo {
   login: string;
   name: string;
@@ -46,4 +48,8 @@ export interface MapArea {
   y: number;
   constructing: boolean;
   running: boolean;
+}
+
+export interface Military {
+  title: string;
 }

@@ -57,6 +57,12 @@ table {
 .card {
   width: 20%;
   display: inline-block;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.card.lock {
+  border: 1px solid red;
 }
 
 .card .card-name {
