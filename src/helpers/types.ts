@@ -53,3 +53,14 @@ export interface MapArea {
 export interface Military {
   title: string;
 }
+
+export interface Account {
+  login: string;
+  name: string;
+  cookie: string;
+  expirationDate: string;
+  startHour: number;
+  dailySearch: number;
+  enabled: boolean;
+  np?: number;
+}

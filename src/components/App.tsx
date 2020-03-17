@@ -51,6 +51,9 @@ const App: React.FC = () => {
           <Route path={`/account/create`}>
             <AccountForm isCreate={true} />
           </Route>
+          <Route path={`/account/edit/:login`}>
+            <AccountForm isCreate={false} />
+          </Route>
           <Route path="/war">
             <WarList />
           </Route>
