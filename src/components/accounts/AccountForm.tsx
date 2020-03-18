@@ -23,7 +23,7 @@ const AccountForm: React.FC<AccountFormProps> = ({ isCreate }) => {
 
   let cookieC = '';
   let cookieU = '';
-  const groups = account.cookie.match(/C=(.+);U=(.+);/);
+  const groups = account.cookie.match(/C=(.*);U=(.*);/);
   if (groups && groups.length > 2) {
     cookieC = groups[1];
     cookieU = groups[2];
