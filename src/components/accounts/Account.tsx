@@ -56,10 +56,16 @@ const Account: React.FC = props => {
     );
   };
 
+  const build = async () => {
+    await request.get(`${ROOT_API}/api/rest/tutorial/build/${login}`);
+    getAccountInfo();
+  };
+
   return (
     <div className="account-detail">
       {accountInfo ? (
         <React.Fragment>
+          <button onClick={build}>Build</button>
           <div>
             <span>{`火: ${accountInfo.fire}/${accountInfo.maxFire} `}</span>
             <span>{`地: ${accountInfo.earth}/${accountInfo.maxEarth} `}</span>
