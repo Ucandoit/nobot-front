@@ -5,3 +5,9 @@ export enum Training {
   WATER = 'WATER',
   SKY = 'SKY'
 }
+
+export enum WarGroup {
+  SOLO = 'SOLO',
+  BASIC = 'BASIC',
+  ADV = 'ADV'
+}

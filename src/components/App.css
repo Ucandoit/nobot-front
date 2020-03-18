@@ -26,6 +26,10 @@
   width: 130px;
 }
 
+.warList .row > span.short {
+  width: 50px;
+}
+
 .warList .row > span .pc {
   height: 10px;
 }

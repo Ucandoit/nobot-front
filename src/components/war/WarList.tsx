@@ -1,10 +1,21 @@
 import React from 'react';
 import * as request from 'superagent';
 import WarStatus from './WarStatus';
+import { WarConfig } from '../../helpers/types';
+import { WarGroup } from '../../helpers/enums';
+import { Link } from 'react-router-dom';
+
+const groups = Object.keys(WarGroup);
 
 const WarList: React.FC = props => {
-  const [accounts, setAccounts] = React.useState([]);
+  const [accounts, setAccounts] = React.useState<WarConfig[]>([]);
   const [endDate, setEndDate] = React.useState('');
+  const [group, setGroup] = React.useState<string>('');
+  const [groupLine, setGroupLine] = React.useState<number>(1);
+  const [groupFP, setGroupFP] = React.useState<boolean>(false);
+  const [groupNPC, setGroupNPC] = React.useState<boolean>(false);
+  const [groupEnabled, setGroupEnabled] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     loadList();
   }, []);
@@ -45,21 +56,80 @@ const WarList: React.FC = props => {
     request.get(`${ROOT_API}/api/rest/war/stop/${login}`).then(() => loadList());
   };
 
-  const togglePC = (login: string, pc: boolean) => {
-    request.get(`${ROOT_API}/api/rest/war/pc/${login}/${!pc}`).then(() => loadList());
+  const toggleGroup = async (login: string, group: string) => {
+    const index = groups.indexOf(group);
+    const nextGroup = index < groups.length - 1 ? groups[index + 1] : groups[0];
+    await request
+      .patch(`${ROOT_API}/api/rest/warConfigs/${login}`)
+      .set('Content-Type', 'application/json')
+      .send({ group: nextGroup });
+    loadList();
   };
 
-  const toggleLine = (login: string, line: number) => {
+  const togglePC = async (login: string, pc: boolean) => {
+    await request.get(`${ROOT_API}/api/rest/war/pc/${login}/${!pc}`);
+    loadList();
+  };
+
+  const toggleLine = async (login: string, line: number) => {
     const nextLine = line === 3 ? 1 : ++line;
-    request.get(`${ROOT_API}/api/rest/war/line/${login}/${nextLine}`).then(() => loadList());
+    await request
+      .patch(`${ROOT_API}/api/rest/warConfigs/${login}`)
+      .set('Content-Type', 'application/json')
+      .send({ line: nextLine });
+    loadList();
   };
 
-  const toggleFP = (login: string, fp: boolean) => {
-    request.get(`${ROOT_API}/api/rest/war/fp/${login}/${!fp}`).then(() => loadList());
+  const toggleLineByGroup = async () => {
+    if (group !== '') {
+      await request.get(`${ROOT_API}/api/rest/war/line/${group}/${groupLine}`);
+      loadList();
+    }
   };
 
-  const toggleNPC = (login: string, npc: boolean) => {
-    request.get(`${ROOT_API}/api/rest/war/npc/${login}/${!npc}`).then(() => loadList());
+  const toggleFP = async (login: string, fp: boolean) => {
+    await request
+      .patch(`${ROOT_API}/api/rest/warConfigs/${login}`)
+      .set('Content-Type', 'application/json')
+      .send({ fp: !fp });
+    loadList();
+  };
+
+  const toggleFPByGroup = async () => {
+    if (group !== '') {
+      await request.get(`${ROOT_API}/api/rest/war/fp/${group}/${groupFP}`);
+      loadList();
+    }
+  };
+
+  const toggleNPC = async (login: string, npc: boolean) => {
+    await request
+      .patch(`${ROOT_API}/api/rest/warConfigs/${login}`)
+      .set('Content-Type', 'application/json')
+      .send({ npc: !npc });
+    loadList();
+  };
+
+  const toggleNPCByGroup = async () => {
+    if (group !== '') {
+      await request.get(`${ROOT_API}/api/rest/war/npc/${group}/${groupNPC}`);
+      loadList();
+    }
+  };
+
+  const toggleEnabled = async (login: string, enabled: boolean) => {
+    await request
+      .patch(`${ROOT_API}/api/rest/warConfigs/${login}`)
+      .set('Content-Type', 'application/json')
+      .send({ enabled: !enabled });
+    loadList();
+  };
+
+  const toggleEnabledByGroup = async () => {
+    if (group !== '') {
+      await request.get(`${ROOT_API}/api/rest/war/enabled/${group}/${groupEnabled}`);
+      loadList();
+    }
   };
 
   const onEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,40 +147,86 @@ const WarList: React.FC = props => {
   return (
     <div className="warList">
       <h1>War</h1>
+      <Link to="/war/create">
+        <button>Create</button>
+      </Link>
       <div>
         End date: <input type="text" value={endDate} onChange={onEndDateChange} />{' '}
         <button onClick={changeEndDate}>Change</button>
+      </div>
+      <div>
+        Group:{' '}
+        <select value={group} onChange={e => setGroup(e.target.value)}>
+          <option value="">ALL</option>
+          {groups.map(g => (
+            <option key={g} value={g}>
+              {g}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        Line:{' '}
+        <select value={groupLine} onChange={e => setGroupLine(parseInt(e.target.value))}>
+          {[1, 2, 3].map(i => (
+            <option key={i} value={i}>
+              {i}
+            </option>
+          ))}
+        </select>
+        <button onClick={toggleLineByGroup}>Change line</button>
+      </div>
+      <div>
+        FP:
+        <input type="checkbox" checked={groupFP} onChange={() => setGroupFP(!groupFP)} />
+        <button onClick={toggleFPByGroup}>Change FP</button>
+      </div>
+      <div>
+        NPC:
+        <input type="checkbox" checked={groupNPC} onChange={() => setGroupNPC(!groupNPC)} />
+        <button onClick={toggleNPCByGroup}>Change NPC</button>
+      </div>
+      <div>
+        Enabled:
+        <input type="checkbox" checked={groupEnabled} onChange={() => setGroupEnabled(!groupEnabled)} />
+        <button onClick={toggleEnabledByGroup}>Change Enabled</button>
       </div>
       <button onClick={checkWar}>Check war status</button>
       <button onClick={startAll}>Start All</button>
       <button onClick={stopAll}>Stop All</button>
       <div className="row">
         <span>Login</span>
-        <span>Line</span>
-        <span>FP</span>
-        <span>NPC</span>
-        <span>Auto enabled</span>
+        <span>Group</span>
+        <span className="short">Line</span>
+        <span className="short">FP</span>
+        <span className="short">NPC</span>
+        <span className="short">Auto enabled</span>
         <span>Status</span>
         <span>Actions</span>
       </div>
-      {accounts.map((account: any) => (
+      {accounts.map(account => (
         <div className="row" key={account.login}>
           <span className="clickable" onClick={() => togglePC(account.login, account.pc)}>
             {account.pc ? <img className="pc" src={process.env.PUBLIC_URL + '/pc.png'} alt="" /> : ''}
             {account.login}
           </span>
-          <span className="clickable" onClick={() => toggleLine(account.login, account.line)}>
+          <span className="clickable" onClick={() => toggleGroup(account.login, account.group)}>
+            {account.group || 'N/A'}
+          </span>
+          <span className="clickable short" onClick={() => toggleLine(account.login, account.line)}>
             {account.line}
           </span>
-          <span className="clickable" onClick={() => toggleFP(account.login, account.fp)}>
+          <span className="clickable short" onClick={() => toggleFP(account.login, account.fp)}>
             {toUnicode(account.fp)}
           </span>
-          <span className="clickable" onClick={() => toggleNPC(account.login, account.npc)}>
+          <span className="clickable short" onClick={() => toggleNPC(account.login, account.npc)}>
             {toUnicode(account.npc)}
           </span>
-          <span>{toUnicode(account.enabled)}</span>
+          <span className="clickable short" onClick={() => toggleEnabled(account.login, account.enabled)}>
+            {toUnicode(account.enabled)}
+          </span>
           <span>
-            <WarStatus login={account.login} status={JSON.parse(account.status)} />
+            <WarStatus login={account.login} status={account.status ? JSON.parse(account.status) : null} />
           </span>
           <span>
             {account.auto ? (

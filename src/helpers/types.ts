@@ -64,3 +64,15 @@ export interface Account {
   enabled: boolean;
   np?: number;
 }
+
+export interface WarConfig {
+  login: string;
+  group: string;
+  enabled: boolean;
+  line: number;
+  fp: boolean;
+  npc: boolean;
+  pc: boolean;
+  auto?: boolean;
+  status?: string;
+}
