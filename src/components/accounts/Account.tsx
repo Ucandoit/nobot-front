@@ -10,6 +10,7 @@ const Account: React.FC = props => {
   const [accountInfo, setAccountInfo] = React.useState<AccountInfo | null>(null);
   const [cardInfo, setCardInfo] = React.useState<CardInfo | null>(null);
   const [trainingType, setTrainingType] = React.useState<Training>(Training.FIRE);
+  const [targetLevel, setTargetLevel] = React.useState<number>(20);
 
   const getAccountInfo = async () => {
     const response = await request.get(`${ROOT_API}/api/rest/account/info/${login}`);
@@ -52,7 +53,9 @@ const Account: React.FC = props => {
         break;
     }
     await request.get(
-      `${ROOT_API}/api/rest/training/start/${login}?catId=${cardInfo.id}&training=${trainingType}&level=${level}&once=${once}`
+      `${ROOT_API}/api/rest/training/start/${login}?catId=${
+        cardInfo.id
+      }&training=${trainingType}&level=${level}&targetLevel=${once ? level + 1 : targetLevel}`
     );
   };
 
@@ -115,6 +118,7 @@ const Account: React.FC = props => {
                     </option>
                   ))}
                 </select>
+                <input type="text" value={targetLevel} onChange={e => setTargetLevel(parseInt(e.target.value))} />
                 <button onClick={() => handleTraining(cardInfo)}>修練</button>
                 <button onClick={() => handleTraining(cardInfo, true)}>修練一次</button>
               </div>
