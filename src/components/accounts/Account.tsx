@@ -1,30 +1,30 @@
 import React from 'react';
-import { useParams } from 'react-router';
 import * as request from 'superagent';
 import { Training } from '../../helpers/enums';
-import { AccountInfo, CardInfo } from '../../helpers/types';
+import { CardInfo } from '../../helpers/types';
+import { useAccountInfo } from '../../hooks';
 import Card from '../card/Card';
 
-const Account: React.FC = props => {
-  const { login } = useParams();
-  const [accountInfo, setAccountInfo] = React.useState<AccountInfo | null>(null);
+interface AccountProps {
+  login: string;
+}
+
+const Account: React.FC<AccountProps> = ({ login }) => {
+  const { loadingAccount, accountInfo } = useAccountInfo(login);
   const [cardInfo, setCardInfo] = React.useState<CardInfo | null>(null);
+  const [loadingCard, setLoadingCard] = React.useState<boolean>(false);
   const [trainingType, setTrainingType] = React.useState<Training>(Training.FIRE);
   const [targetLevel, setTargetLevel] = React.useState<number>(20);
 
-  const getAccountInfo = async () => {
-    const response = await request.get(`${ROOT_API}/api/rest/account/info/${login}`);
-    setAccountInfo(response.body);
-  };
-
   React.useEffect(() => {
-    getAccountInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setCardInfo(null);
+  }, [login]);
 
   const handleCardClick = async (cardId: string) => {
+    setLoadingCard(true);
     const response = await request.get(`${ROOT_API}/api/rest/card/${cardId}?login=${login}`);
     setCardInfo(response.body);
+    setLoadingCard(false);
   };
 
   const handleTrainingTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -61,12 +61,13 @@ const Account: React.FC = props => {
 
   const build = async () => {
     await request.get(`${ROOT_API}/api/rest/tutorial/build/${login}`);
-    getAccountInfo();
   };
 
   return (
     <div className="account-detail">
-      {accountInfo ? (
+      {loadingAccount ? (
+        'Loading'
+      ) : accountInfo ? (
         <React.Fragment>
           <button onClick={build}>Build</button>
           <div>
@@ -103,7 +104,9 @@ const Account: React.FC = props => {
               <Card key={card.id} card={card} handleCardClick={handleCardClick} />
             ))}
           </div>
-          {cardInfo ? (
+          {loadingCard ? (
+            'Loading'
+          ) : cardInfo ? (
             <div>
               <div>{cardInfo.name}</div>
               <div>
@@ -122,6 +125,9 @@ const Account: React.FC = props => {
                 <button onClick={() => handleTraining(cardInfo)}>修練</button>
                 <button onClick={() => handleTraining(cardInfo, true)}>修練一次</button>
               </div>
+              <div>{cardInfo.skill1}</div>
+              <div>{cardInfo.skill2}</div>
+              <div>{cardInfo.skill3}</div>
             </div>
           ) : null}
         </React.Fragment>

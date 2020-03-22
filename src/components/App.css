@@ -81,3 +81,33 @@ table {
 .map td.running {
   border: 1px solid blue;
 }
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+}
+
+.left-panel {
+  flex: 1;
+  text-align: right;
+}
+
+.account-list {
+  display: inline-block;
+  overflow: auto;
+  height: 700px;
+  border: 1px solid;
+}
+
+.account-card {
+  cursor: pointer;
+  padding-right: 10px;
+}
+
+.account-card.selected {
+  background-color: #bbbbbb;
+}
+
+.right-panel {
+  flex: 2;
+}

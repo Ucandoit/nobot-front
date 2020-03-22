@@ -1,16 +1,15 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
+import AccountForm from './accounts/AccountForm';
+import Accounts from './accounts/Accounts';
 import './App.css';
 import AuctionHistory from './auctionHistory/AuctionHistory';
 import DashBoard from './dashboard/Dashboard';
-import Accounts from './accounts/Accounts';
-import Account from './accounts/Account';
-import WarList from './war/WarList';
-import Story from './story/Story';
 import DrawCard from './drawCard/DrawCard';
 import RecruitSystem from './recruit/RecruitSystem';
-import AccountForm from './accounts/AccountForm';
+import Story from './story/Story';
 import WarAdd from './war/WarAdd';
+import WarList from './war/WarList';
 
 const App: React.FC = () => {
   return (
@@ -41,13 +40,13 @@ const App: React.FC = () => {
         </ul>
         <Switch>
           <Route exact path="/">
+            <Redirect to="/dashboard" />
+          </Route>
+          <Route path="/dashboard">
             <DashBoard />
           </Route>
           <Route exact path="/accounts">
             <Accounts />
-          </Route>
-          <Route path={`/accounts/:login`}>
-            <Account />
           </Route>
           <Route path={`/account/create`}>
             <AccountForm isCreate={true} />
