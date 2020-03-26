@@ -8,7 +8,7 @@ const DrawCard: React.FC = props => {
   }, []);
 
   const loadDrawStatusList = () => {
-    request.get(`${ROOT_API}/api/rest/drawStatuses?size=100&sort=login`).then(res => {
+    request.get(`${ROOT_API}/api/rest/drawStatuses?size=200&sort=login`).then(res => {
       setDrawStatusList(res.body._embedded.drawStatuses);
     });
   };

@@ -7,7 +7,7 @@ const RecruitSystem: React.FC = props => {
   const [source, setSource] = React.useState<string>('');
   const [logins, setLogins] = React.useState<string[]>([]);
   React.useEffect(() => {
-    request.get(`${ROOT_API}/api/rest/accounts?size=100&sort=login`).then(res => {
+    request.get(`${ROOT_API}/api/rest/accounts?size=500&sort=login`).then(res => {
       setLogins(res.body._embedded.accounts.map((account: any) => account.login));
     });
   }, []);
