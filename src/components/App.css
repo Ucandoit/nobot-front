@@ -111,3 +111,15 @@ table {
 .right-panel {
   flex: 2;
 }
+
+.friendships {
+  display: flex;
+  flex-wrap: wrap;
+  width: 700px;
+  margin: auto;
+}
+
+.friendships > div {
+  flex: 1;
+  flex-basis: 12.5%;
+}

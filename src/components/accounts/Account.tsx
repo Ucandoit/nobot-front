@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as request from 'superagent';
 import { Training } from '../../helpers/enums';
 import { CardInfo } from '../../helpers/types';
 import { useAccountInfo } from '../../hooks';
 import Card from '../card/Card';
+import Battle from '../battle/Battle';
 
 interface AccountProps {
   login: string;
@@ -15,6 +16,7 @@ const Account: React.FC<AccountProps> = ({ login }) => {
   const [loadingCard, setLoadingCard] = React.useState<boolean>(false);
   const [trainingType, setTrainingType] = React.useState<Training>(Training.FIRE);
   const [targetLevel, setTargetLevel] = React.useState<number>(20);
+  const [showBattle, setShowBattle] = useState<boolean>(false);
 
   React.useEffect(() => {
     setCardInfo(null);
@@ -130,6 +132,11 @@ const Account: React.FC<AccountProps> = ({ login }) => {
               <div>{cardInfo.skill3}</div>
             </div>
           ) : null}
+          {showBattle ? (
+            <Battle login={login} />
+          ) : (
+            <button onClick={() => setShowBattle(!showBattle)}>Toggle battle</button>
+          )}
         </React.Fragment>
       ) : null}
     </div>
