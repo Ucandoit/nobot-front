@@ -6,6 +6,9 @@ export interface CardInfo {
   property: string;
   military: Military;
   tradable: boolean;
+  inAction: boolean;
+  trading: boolean;
+  protect: boolean;
   imgUrl: string;
   refineTotal: string;
   refineAtk: string;

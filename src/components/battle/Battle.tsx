@@ -25,6 +25,11 @@ const Battle: React.FC<BattleProps> = ({ login }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const battleOnce = async () => {
+    await superagent.get(`${ROOT_API}/api/rest/battle/start/${login}?times=6`);
+    setInBattle(true);
+  };
+
   const startBattle = async () => {
     await superagent.get(`${ROOT_API}/api/rest/battle/start/${login}`);
     setInBattle(true);
@@ -44,6 +49,9 @@ const Battle: React.FC<BattleProps> = ({ login }) => {
           </div>
         ))}
       </div>
+      <button disabled={inBattle} onClick={() => battleOnce()}>
+        Once
+      </button>
       <button disabled={inBattle} onClick={() => startBattle()}>
         Start
       </button>
