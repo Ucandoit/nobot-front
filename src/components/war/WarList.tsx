@@ -144,6 +144,14 @@ const WarList: React.FC = props => {
       .then(res => {});
   };
 
+  const goToWarFieldForGroup = async (warField: string) => {
+    await request.post(`${ROOT_API}/api/rest/war/field`).send(`group=${group}&warField=${warField}`);
+  };
+
+  const chooseWarHostForGroup = async (warHost: number) => {
+    await request.post(`${ROOT_API}/api/rest/war/host`).send(`group=${group}&warHost=${warHost}`);
+  };
+
   return (
     <div className="warList">
       <h1>War</h1>
@@ -226,7 +234,12 @@ const WarList: React.FC = props => {
             {toUnicode(account.enabled)}
           </span>
           <span>
-            <WarStatus login={account.login} status={account.status ? JSON.parse(account.status) : null} />
+            <WarStatus
+              login={account.login}
+              status={account.status ? JSON.parse(account.status) : null}
+              goToWarFieldForGroup={goToWarFieldForGroup}
+              chooseWarHostForGroup={chooseWarHostForGroup}
+            />
           </span>
           <span>
             {account.auto ? (

@@ -5,9 +5,11 @@ import { WAR_HOST_LIST } from '../../helpers/constants';
 interface WarStatusProps {
   login: string;
   status: any;
+  goToWarFieldForGroup: (warField: string) => Promise<void>;
+  chooseWarHostForGroup: (warHost: number) => Promise<void>;
 }
 
-const WarStatus: React.FC<WarStatusProps> = ({ login, status }) => {
+const WarStatus: React.FC<WarStatusProps> = ({ login, status, goToWarFieldForGroup, chooseWarHostForGroup }) => {
   const [warField, setWarField] = React.useState(status && status.warFields.length > 0 ? status.warFields[0] : '');
   const [warHost, setWarHost] = React.useState<string>(status && status.warHosts.length > 0 ? status.warHosts[0] : '');
 
@@ -48,6 +50,7 @@ const WarStatus: React.FC<WarStatusProps> = ({ login, status }) => {
               ))}
           </select>
           <button onClick={chooseWarHost}>Go</button>
+          <button onClick={() => chooseWarHostForGroup(WAR_HOST_LIST[warHost])}>All</button>
         </React.Fragment>
       );
     }
@@ -63,6 +66,7 @@ const WarStatus: React.FC<WarStatusProps> = ({ login, status }) => {
           ))}
       </select>
       <button onClick={goToWarField}>Go</button>
+      <button onClick={() => goToWarFieldForGroup(warField)}>All</button>
     </React.Fragment>
   );
 };
