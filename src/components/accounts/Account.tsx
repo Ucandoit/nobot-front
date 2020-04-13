@@ -65,6 +65,10 @@ const Account: React.FC<AccountProps> = ({ login }) => {
     await request.get(`${ROOT_API}/api/rest/tutorial/build/${login}`);
   };
 
+  const countryWrestle = async () => {
+    await request.get(`${ROOT_API}/api/rest/wrestle/country/start/${login}?times=100`);
+  };
+
   return (
     <div className="account-detail">
       {loadingAccount ? (
@@ -72,6 +76,7 @@ const Account: React.FC<AccountProps> = ({ login }) => {
       ) : accountInfo ? (
         <React.Fragment>
           <button onClick={build}>Build</button>
+          <button onClick={countryWrestle}>全国対戦</button>
           <div>
             <span>{`火: ${accountInfo.fire}/${accountInfo.maxFire} `}</span>
             <span>{`地: ${accountInfo.earth}/${accountInfo.maxEarth} `}</span>

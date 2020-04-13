@@ -71,14 +71,13 @@ table {
   font-size: 12px;
 }
 
-/* .card .card-status {
-  width: 100%;
-  height: 20px;
-} */
+.card .card-status {
+  line-height: 10px;
+}
 
 .card .card-status > span {
   width: 25%;
-  height: 20px;
+  height: 10px;
   display: inline-block;
 }
 
@@ -86,7 +85,7 @@ table {
   background-color: gray;
 }
 
-.card .card-status .protecting {
+.card .card-status .protect {
   background-color: blue;
 }
 
