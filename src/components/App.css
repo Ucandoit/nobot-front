@@ -147,3 +147,26 @@ table {
   flex: 1;
   flex-basis: 12.5%;
 }
+
+.pages > span {
+  width: 20px;
+  display: inline-block;
+}
+
+.pages > span.clickable {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.card-list .row {
+  line-height: 30px;
+}
+
+.card-list .row > span {
+  display: inline-block;
+}
+
+.card-list .row img {
+  width: 30px;
+  vertical-align: middle;
+}

@@ -79,3 +79,17 @@ export interface WarConfig {
   auto?: boolean;
   status?: string;
 }
+
+export interface Card {
+  id: number;
+  number: number;
+  name: string;
+  realName: string;
+  rarity: string;
+  star: number;
+  property: string;
+  cost: number;
+  military: string;
+  job: string;
+  faceUrl: string;
+}
