@@ -11,6 +11,7 @@ import Story from './story/Story';
 import WarAdd from './war/WarAdd';
 import WarList from './war/WarList';
 import CardList from './card/CardList';
+import CardEdit from './card/CardEdit';
 
 const App: React.FC = () => {
   return (
@@ -76,8 +77,11 @@ const App: React.FC = () => {
           <Route path="/recruit">
             <RecruitSystem />
           </Route>
-          <Route path="/cards">
+          <Route exact path="/cards">
             <CardList />
+          </Route>
+          <Route path="/cards/:id">
+            <CardEdit />
           </Route>
         </Switch>
       </div>

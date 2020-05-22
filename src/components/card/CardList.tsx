@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import * as request from 'superagent';
 import { Card } from '../../helpers/types';
+import { Link, useLocation } from 'react-router-dom';
 
 const rarityList = ['煌', '極', '稀', '珍', '並', '宝', '誉'];
 
 const CardList: React.FC = () => {
-  const [page, setPage] = useState(0);
+  const location = useLocation<{ page: number; rarity: string }>();
+  const [page, setPage] = useState(location.state ? location.state.page : 0);
   const [totalPage, setTotalPage] = useState(0);
-  const [rarity, setRarity] = useState('');
+  const [rarity, setRarity] = useState(location.state ? location.state.rarity : '');
   const [cards, setCards] = useState<Card[]>([]);
 
   const getCards = async () => {
@@ -78,6 +80,9 @@ const CardList: React.FC = () => {
           <span style={{ width: '40px' }}>{card.cost}</span>
           <span style={{ width: '70px' }}>{card.military}</span>
           <span style={{ width: '40px' }}>{card.job}</span>
+          <span>
+            <Link to={{ pathname: `/cards/${card.id}`, state: { page, rarity } }}>Edit</Link>
+          </span>
         </div>
       ))}
     </div>

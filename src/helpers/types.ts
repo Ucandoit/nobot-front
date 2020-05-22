@@ -92,4 +92,19 @@ export interface Card {
   military: string;
   job: string;
   faceUrl: string;
+  illustUrl?: string;
+  initialAtk?: number;
+  initialDef?: number;
+  initialSpd?: number;
+  initialVir?: number;
+  initialStg?: number;
+  finalAtk?: number;
+  finalDef?: number;
+  finalSpd?: number;
+  finalVir?: number;
+  finalStg?: number;
+  personality?: string;
+  slogan?: string;
+  history?: string;
+  trainSkills?: string;
 }
