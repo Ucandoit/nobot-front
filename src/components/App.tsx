@@ -15,7 +15,7 @@ import CardEdit from './card/CardEdit';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter basename={process.env.NODE_ENV === 'development' ? '' : '/nobot'}>
+    <BrowserRouter basename="">
       <div className="App">
         <ul>
           <li>
