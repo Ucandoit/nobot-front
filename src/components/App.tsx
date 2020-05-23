@@ -12,6 +12,7 @@ import WarAdd from './war/WarAdd';
 import WarList from './war/WarList';
 import CardList from './card/CardList';
 import CardEdit from './card/CardEdit';
+import Sell from './auction/sell/Sell';
 
 const App: React.FC = () => {
   return (
@@ -41,6 +42,9 @@ const App: React.FC = () => {
           </li>
           <li>
             <Link to="/cards">Cards</Link>
+          </li>
+          <li>
+            <Link to="/auction/sell">Sell</Link>
           </li>
         </ul>
         <Switch>
@@ -82,6 +86,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/cards/:id">
             <CardEdit />
+          </Route>
+          <Route path="/auction/sell">
+            <Sell />
           </Route>
         </Switch>
       </div>

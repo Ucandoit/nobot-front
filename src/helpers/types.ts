@@ -5,11 +5,11 @@ export interface CardInfo {
   rarity: string;
   property: string;
   military: Military;
-  tradable: boolean;
+  untradable: boolean;
   inAction: boolean;
   trading: boolean;
   protect: boolean;
-  imgUrl: string;
+  faceUrl: string;
   refineTotal: string;
   refineAtk: string;
   refineDef: string;
@@ -40,6 +40,7 @@ export interface AccountInfo {
   areas: MapArea[];
   deckCards: CardInfo[];
   reserveCards: CardInfo[];
+  expirationDate: Date;
 }
 
 export interface MapArea {
