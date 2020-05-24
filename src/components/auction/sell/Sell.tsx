@@ -1,7 +1,7 @@
-import React, { useState, ChangeEvent } from 'react';
-import { AccountInfo, CardInfo } from '../../../helpers/types';
-import request from 'superagent';
 import moment from 'moment';
+import React, { ChangeEvent, useState } from 'react';
+import request from 'superagent';
+import { AccountInfo, CardInfo } from '../../../helpers/types';
 import Card from '../../card/Card';
 
 const Sell = () => {
@@ -10,7 +10,7 @@ const Sell = () => {
   const [reserveCards, setReserveCards] = useState<CardInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [card, setCard] = useState<CardInfo | undefined>();
-  const [sellNp, setSellNp] = useState<number>(50000);
+  const [sellPrice, setSellPrice] = useState<number>(50000);
 
   React.useEffect(() => {
     getAccounts();
@@ -45,10 +45,13 @@ const Sell = () => {
   };
 
   const handleNpChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSellNp(parseInt(event.target.value));
+    setSellPrice(parseInt(event.target.value));
   };
 
-  const sell = () => {};
+  const sell = async () => {
+    await request.post(`${ROOT_API}/api/cards/${card!.id}/sell?login=${selectedLogin}&sellPrice=${sellPrice}`).send();
+    getReserveCards();
+  };
 
   const now = moment.now();
 
@@ -76,7 +79,7 @@ const Sell = () => {
               <div>{card.name}</div>
               <div>
                 <label>np</label>
-                <input type="text" value={sellNp} onChange={handleNpChange} />
+                <input type="text" value={sellPrice} onChange={handleNpChange} />
                 <button onClick={sell}>Sell</button>
               </div>
             </div>
