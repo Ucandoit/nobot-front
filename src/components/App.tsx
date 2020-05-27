@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { AppBar, SideBar } from '../layout';
 import AccountForm from './accounts/AccountForm';
 import Accounts from './accounts/Accounts';
@@ -55,35 +55,6 @@ const App: React.FC = () => {
           <AppBar />
           <main className={classes.contentWithSidebar}>
             <SideBar />
-            <ul>
-              <li>
-                <Link to="/">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/accounts">Accounts</Link>
-              </li>
-              <li>
-                <Link to="/war">War</Link>
-              </li>
-              <li>
-                <Link to="/auction_history">Auction History</Link>
-              </li>
-              <li>
-                <Link to="/story">Story</Link>
-              </li>
-              <li>
-                <Link to="/draw_card">DrawCard</Link>
-              </li>
-              <li>
-                <Link to="/recruit">Recruit</Link>
-              </li>
-              <li>
-                <Link to="/cards">Cards</Link>
-              </li>
-              <li>
-                <Link to="/auction/sell">Sell</Link>
-              </li>
-            </ul>
             <Switch>
               <Route exact path="/">
                 <Redirect to="/dashboard" />

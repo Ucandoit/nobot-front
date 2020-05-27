@@ -1,15 +1,7 @@
-import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
+import { Drawer, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
-import MailIcon from '@material-ui/icons/Mail';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-// const useStyles = makeStyles({
-//   list: {
-//     width: 250,
-//   }
-// });
 
 const useStyles = makeStyles(theme => ({
   menu: {
@@ -18,6 +10,10 @@ const useStyles = makeStyles(theme => ({
     width: '12rem',
     backgroundColor: 'transparent'
     // borderRight: "none",
+  },
+  itemIcon: {
+    minWidth: 'unset',
+    marginRight: '1em'
   }
 }));
 
@@ -25,6 +21,46 @@ const menu = [
   {
     name: 'Dashboard',
     to: '/',
+    icon: 'mail'
+  },
+  {
+    name: 'Accounts',
+    to: '/accounts',
+    icon: 'mail'
+  },
+  {
+    name: 'War',
+    to: '/war',
+    icon: 'mail'
+  },
+  {
+    name: 'Auction History',
+    to: '/auction_history',
+    icon: 'mail'
+  },
+  {
+    name: 'Sell',
+    to: '/auction/sell',
+    icon: 'euro_symbol'
+  },
+  {
+    name: 'Story',
+    to: '/story',
+    icon: 'mail'
+  },
+  {
+    name: 'Draw Card',
+    to: '/draw_card',
+    icon: 'mail'
+  },
+  {
+    name: 'Recruit',
+    to: '/recruit',
+    icon: 'mail'
+  },
+  {
+    name: 'Cards',
+    to: '/cards',
     icon: 'mail'
   }
 ];
@@ -40,18 +76,9 @@ const SideBar = () => {
       }}
     >
       <div role="presentation">
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text} component={Link} to="/">
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
         {menu.map(item => (
           <ListItem button key={item.name} component={Link} to={item.to}>
-            <ListItemIcon>
+            <ListItemIcon className={classes.itemIcon}>
               <Icon>{item.icon}</Icon>
             </ListItemIcon>
             <ListItemText primary={item.name} />
