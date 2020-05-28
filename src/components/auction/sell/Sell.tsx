@@ -1,20 +1,15 @@
-import moment from 'moment';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import request from 'superagent';
-import { AccountInfo, CardInfo } from '../../../helpers/types';
+import { CardInfo } from '../../../helpers/types';
 import Card from '../../card/Card';
+import AccountSelector from './AccountSelector';
 
 const Sell = () => {
-  const [accounts, setAccounts] = useState<AccountInfo[]>([]);
   const [selectedLogin, setSelectedLogin] = useState<string>('');
   const [reserveCards, setReserveCards] = useState<CardInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [card, setCard] = useState<CardInfo | undefined>();
   const [sellPrice, setSellPrice] = useState<number>(50000);
-
-  React.useEffect(() => {
-    getAccounts();
-  }, []);
 
   React.useEffect(() => {
     if (selectedLogin) {
@@ -23,21 +18,11 @@ const Sell = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLogin]);
 
-  const getAccounts = async () => {
-    const response = await request.get(`${ROOT_API}/api/accounts`);
-    setAccounts(response.body);
-  };
-
   const getReserveCards = async () => {
     setLoading(true);
     const response = await request.get(`${ROOT_API}/api/accounts/${selectedLogin}/reserveCards`);
     setReserveCards(response.body);
     setLoading(false);
-  };
-
-  const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLogin(event.target.value);
-    setReserveCards([]);
   };
 
   const handleCardClick = (id: string) => {
@@ -53,40 +38,37 @@ const Sell = () => {
     getReserveCards();
   };
 
-  const now = moment.now();
+  const changeAccount = useCallback((login: string) => {
+    setSelectedLogin(login);
+  }, []);
 
   return (
-    <div>
-      <select value={selectedLogin} onChange={handleOnChange}>
-        <option value=""> - </option>
-        {accounts.map(account => (
-          <option key={account.login} value={account.login} disabled={moment(account.expirationDate).isBefore(now)}>
-            {account.login}
-          </option>
-        ))}
-      </select>
-      {loading ? (
-        <div>loading...</div>
-      ) : (
-        <>
-          <div className="reserve-group">
-            {reserveCards.map(card => (
-              <Card key={card.id} card={card} handleCardClick={handleCardClick} />
-            ))}
-          </div>
-          {card ? (
-            <div className="sell">
-              <div>{card.name}</div>
-              <div>
-                <label>np</label>
-                <input type="text" value={sellPrice} onChange={handleNpChange} />
-                <button onClick={sell}>Sell</button>
-              </div>
+    <>
+      <AccountSelector selected={selectedLogin} changeAccount={changeAccount} />
+      <div>
+        {loading ? (
+          <div>loading...</div>
+        ) : (
+          <>
+            <div className="reserve-group">
+              {reserveCards.map(card => (
+                <Card key={card.id} card={card} handleCardClick={handleCardClick} />
+              ))}
             </div>
-          ) : null}
-        </>
-      )}
-    </div>
+            {card ? (
+              <div className="sell">
+                <div>{card.name}</div>
+                <div>
+                  <label>np</label>
+                  <input type="text" value={sellPrice} onChange={handleNpChange} />
+                  <button onClick={sell}>Sell</button>
+                </div>
+              </div>
+            ) : null}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
