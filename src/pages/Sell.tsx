@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import request from 'superagent';
-import { ReserveCards } from '../../../card';
-import { CardInfo } from '../../../helpers/types';
-import Card from '../../card/Card';
-import AccountSelector from './AccountSelector';
-import SellForm from './SellForm';
+import { AccountSelector } from '../account';
+import { SellForm } from '../auction';
+import { ReserveCards } from '../card';
+import Card from '../components/card/Card';
+import { CardInfo } from '../helpers/types';
 
 const Sell = () => {
   const [selectedLogin, setSelectedLogin] = useState<string>('');

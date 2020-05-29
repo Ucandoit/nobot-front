@@ -4,7 +4,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import moment from 'moment';
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import request from 'superagent';
-import { AccountInfo } from '../../../helpers/types';
+import { AccountInfo } from '../helpers';
 
 const useStyles = makeStyles(theme => ({
   icon: {

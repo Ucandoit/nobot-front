@@ -4,7 +4,6 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import AccountForm from './components/accounts/AccountForm';
 import Accounts from './components/accounts/Accounts';
-import Sell from './components/auction/sell/Sell';
 import AuctionHistory from './components/auctionHistory/AuctionHistory';
 import CardEdit from './components/card/CardEdit';
 import CardList from './components/card/CardList';
@@ -15,6 +14,7 @@ import Story from './components/story/Story';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
+import { Sell } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
