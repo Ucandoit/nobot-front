@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import request from 'superagent';
+import { ReserveCards } from '../../../card';
 import { CardInfo } from '../../../helpers/types';
 import Card from '../../card/Card';
 import AccountSelector from './AccountSelector';
+import SellForm from './SellForm';
 
 const Sell = () => {
   const [selectedLogin, setSelectedLogin] = useState<string>('');
@@ -45,6 +47,8 @@ const Sell = () => {
   return (
     <>
       <AccountSelector selected={selectedLogin} changeAccount={changeAccount} />
+      <SellForm />
+      <ReserveCards account={selectedLogin} />
       <div>
         {loading ? (
           <div>loading...</div>
