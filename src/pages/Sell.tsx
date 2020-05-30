@@ -1,44 +1,21 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
-import request from 'superagent';
+import React, { useCallback, useState } from 'react';
 import { AccountSelector } from '../account';
 import { SellForm } from '../auction';
 import { ReserveCards } from '../card';
-import Card from '../components/card/Card';
-import { CardInfo } from '../helpers/types';
 
 const Sell = () => {
   const [selectedLogin, setSelectedLogin] = useState<string>('');
-  const [reserveCards, setReserveCards] = useState<CardInfo[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [card, setCard] = useState<CardInfo | undefined>();
-  const [sellPrice, setSellPrice] = useState<number>(50000);
+  // const [card, setCard] = useState<CardInfo | undefined>();
+  // const [sellPrice, setSellPrice] = useState<number>(50000);
 
-  React.useEffect(() => {
-    if (selectedLogin) {
-      getReserveCards();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLogin]);
+  // const handleNpChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setSellPrice(parseInt(event.target.value));
+  // };
 
-  const getReserveCards = async () => {
-    setLoading(true);
-    const response = await request.get(`${ROOT_API}/api/accounts/${selectedLogin}/reserveCards`);
-    setReserveCards(response.body);
-    setLoading(false);
-  };
-
-  const handleCardClick = (id: string) => {
-    setCard(reserveCards.find(c => c.id === id));
-  };
-
-  const handleNpChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSellPrice(parseInt(event.target.value));
-  };
-
-  const sell = async () => {
-    await request.post(`${ROOT_API}/api/cards/${card!.id}/sell?login=${selectedLogin}&sellPrice=${sellPrice}`).send();
-    getReserveCards();
-  };
+  // const sell = async () => {
+  //   await request.post(`${ROOT_API}/api/cards/${card!.id}/sell?login=${selectedLogin}&sellPrice=${sellPrice}`).send();
+  //   getReserveCards();
+  // };
 
   const changeAccount = useCallback((login: string) => {
     setSelectedLogin(login);
@@ -49,7 +26,7 @@ const Sell = () => {
       <AccountSelector selected={selectedLogin} changeAccount={changeAccount} />
       <SellForm />
       <ReserveCards account={selectedLogin} />
-      <div>
+      {/* <div>
         {loading ? (
           <div>loading...</div>
         ) : (
@@ -71,7 +48,7 @@ const Sell = () => {
             ) : null}
           </>
         )}
-      </div>
+      </div> */}
     </>
   );
 };

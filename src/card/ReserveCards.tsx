@@ -1,6 +1,13 @@
-import { Grid } from '@material-ui/core';
+import { Grid, LinearProgress, makeStyles } from '@material-ui/core';
 import React, { useCallback } from 'react';
-import { CardInfo } from '../helpers';
+import { CardInfo, useAsyncFunction } from '../helpers';
+import Card from './Card';
+
+const useStyles = makeStyles(theme => ({
+  progress: {
+    width: '100%'
+  }
+}));
 
 interface ReserveCardsProps {
   account: string;
@@ -14,6 +21,7 @@ const getReserveCards = (login: string): Promise<CardInfo[]> => {
 const empty: CardInfo[] = [];
 
 const ReserveCards = ({ account }: ReserveCardsProps) => {
+  const classes = useStyles();
   const getReserveCardsCallback = useCallback(() => {
     if (account) {
       return getReserveCards(account);
@@ -21,11 +29,20 @@ const ReserveCards = ({ account }: ReserveCardsProps) => {
       return Promise.resolve([]);
     }
   }, [account]);
-  // const [cards, isPending, error] = useAsyncFunction<CardInfo[]>(
-  //   getReserveCardsCallback,
-  //   empty
-  // );
-  return <Grid container justify="center"></Grid>;
+  const [cards, isPending] = useAsyncFunction<CardInfo[]>(getReserveCardsCallback, empty);
+  return (
+    <Grid container justify="flex-start">
+      {isPending ? (
+        <LinearProgress className={classes.progress} />
+      ) : (
+        <>
+          {cards.map(card => (
+            <Card key={card.id} card={card} />
+          ))}
+        </>
+      )}
+    </Grid>
+  );
 };
 
 export default ReserveCards;

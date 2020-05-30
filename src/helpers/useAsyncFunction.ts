@@ -6,8 +6,11 @@ const useAsyncFunction = <T>(asyncFunction: () => Promise<T>, defaultValue: T): 
     isPending: true,
     error: null
   });
-
   useEffect(() => {
+    setState(prev => ({
+      ...prev,
+      isPending: true
+    }));
     asyncFunction()
       .then(value => setState({ value, isPending: false, error: null }))
       .catch(error =>
