@@ -33,12 +33,13 @@ const useStyles = makeStyles(theme => ({
 
 interface CardProps {
   card: CardInfo;
+  selectCard: (id: string) => void;
 }
 
-const Card = ({ card: { faceUrl, trading, inAction, untradable, protect, name } }: CardProps) => {
+const Card = ({ card: { id, faceUrl, trading, inAction, untradable, protect, name }, selectCard }: CardProps) => {
   const classes = useStyles();
   return (
-    <MuiCard className={classes.card}>
+    <MuiCard className={classes.card} onClick={() => selectCard(id)}>
       <CardContent className={classes.cardContent}>
         <div className={classes.imgWrapper}>
           <img src={faceUrl} alt={name} title={name} />

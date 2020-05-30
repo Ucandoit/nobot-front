@@ -2,30 +2,39 @@ import React, { useCallback, useState } from 'react';
 import { AccountSelector } from '../account';
 import { SellForm } from '../auction';
 import { ReserveCards } from '../card';
+import { CardInfo, useAsyncFunction } from '../helpers';
+
+const getCard = (id: string, login: string): Promise<CardInfo> => {
+  return fetch(`${ROOT_API}/api/cards/${id}?login=${login}`).then(response => response.json());
+};
 
 const Sell = () => {
-  const [selectedLogin, setSelectedLogin] = useState<string>('');
-  // const [card, setCard] = useState<CardInfo | undefined>();
-  // const [sellPrice, setSellPrice] = useState<number>(50000);
+  const [selectedAccount, setSelectedAccount] = useState<string>('');
+  const [selectedCard, setSelectedCard] = useState<string>('');
 
-  // const handleNpChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setSellPrice(parseInt(event.target.value));
-  // };
+  const getCardCallback = useCallback(() => {
+    if (selectedAccount && selectedCard) {
+      return getCard(selectedCard, selectedAccount);
+    } else {
+      return Promise.resolve(null);
+    }
+  }, [selectedAccount, selectedCard]);
 
-  // const sell = async () => {
-  //   await request.post(`${ROOT_API}/api/cards/${card!.id}/sell?login=${selectedLogin}&sellPrice=${sellPrice}`).send();
-  //   getReserveCards();
-  // };
+  const [card, isPending] = useAsyncFunction<CardInfo | null>(getCardCallback, null);
 
   const changeAccount = useCallback((login: string) => {
-    setSelectedLogin(login);
+    setSelectedAccount(login);
+  }, []);
+
+  const selectCard = useCallback((id: string) => {
+    setSelectedCard(id);
   }, []);
 
   return (
     <>
-      <AccountSelector selected={selectedLogin} changeAccount={changeAccount} />
-      <SellForm />
-      <ReserveCards account={selectedLogin} />
+      <AccountSelector selectedAccount={selectedAccount} changeAccount={changeAccount} />
+      <ReserveCards account={selectedAccount} selectCard={selectCard} />
+      {selectedCard ? <SellForm card={card} isPending={isPending} login={selectedAccount} /> : null}
       {/* <div>
         {loading ? (
           <div>loading...</div>

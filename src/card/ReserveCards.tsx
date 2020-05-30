@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
 
 interface ReserveCardsProps {
   account: string;
+  selectCard: (id: string) => void;
 }
 
 const getReserveCards = (login: string): Promise<CardInfo[]> => {
@@ -20,7 +21,7 @@ const getReserveCards = (login: string): Promise<CardInfo[]> => {
 // define outside of the component to avoid triggering rerender
 const empty: CardInfo[] = [];
 
-const ReserveCards = ({ account }: ReserveCardsProps) => {
+const ReserveCards = ({ account, selectCard }: ReserveCardsProps) => {
   const classes = useStyles();
   const getReserveCardsCallback = useCallback(() => {
     if (account) {
@@ -37,7 +38,7 @@ const ReserveCards = ({ account }: ReserveCardsProps) => {
       ) : (
         <>
           {cards.map(card => (
-            <Card key={card.id} card={card} />
+            <Card key={card.id} card={card} selectCard={selectCard} />
           ))}
         </>
       )}

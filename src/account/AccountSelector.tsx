@@ -20,11 +20,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface AccountSelectorProps {
-  selected: string;
+  selectedAccount: string;
   changeAccount: (login: string) => void;
 }
 
-const AccountSelector = ({ selected, changeAccount }: AccountSelectorProps) => {
+const AccountSelector = ({ selectedAccount, changeAccount }: AccountSelectorProps) => {
   const now = moment.now();
 
   const classes = useStyles();
@@ -57,7 +57,7 @@ const AccountSelector = ({ selected, changeAccount }: AccountSelectorProps) => {
       <Grid item xs={4} className={classes.selectWrapper}>
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="account-label">Account</InputLabel>
-          <Select labelId="account-label" id="account" value={selected} onChange={handleChange} label="Account">
+          <Select labelId="account-label" id="account" value={selectedAccount} onChange={handleChange} label="Account">
             {accounts.map(account => (
               <MenuItem key={account.login} value={account.login} disabled={checkExpired(account.expirationDate)}>
                 {account.login}

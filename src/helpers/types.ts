@@ -3,6 +3,7 @@ export interface CardInfo {
   name: string;
   realName: string;
   rarity: string;
+  star: number;
   property: string;
   military: Military;
   untradable: boolean;
@@ -10,6 +11,7 @@ export interface CardInfo {
   trading: boolean;
   protect: boolean;
   faceUrl: string;
+  deed: string;
   refineTotal: string;
   refineAtk: string;
   refineDef: string;
