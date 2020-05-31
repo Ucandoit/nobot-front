@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
 const useAsyncFunction = <T>(
-  asyncFunction: () => Promise<T>,
-  defaultValue: T
+  asyncFunction: (...args: any[]) => Promise<T>,
+  defaultValue: T,
+  ...params: any[]
 ): [T, boolean, string | null, () => void] => {
   const [state, setState] = useState({
     value: defaultValue,
@@ -15,7 +16,8 @@ const useAsyncFunction = <T>(
       ...prev,
       isPending: true
     }));
-    asyncFunction()
+    asyncFunction
+      .apply(null, params)
       .then(value => setState({ value, isPending: false, error: null }))
       .catch(error =>
         setState({
@@ -24,7 +26,8 @@ const useAsyncFunction = <T>(
           error: error.toString()
         })
       );
-  }, [asyncFunction, defaultValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asyncFunction, defaultValue, JSON.stringify(params)]);
 
   useEffect(() => {
     callFunction();

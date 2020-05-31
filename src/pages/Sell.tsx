@@ -12,11 +12,17 @@ const useStyles = makeStyles({
 });
 
 const getReserveCards = (login: string): Promise<CardInfo[]> => {
-  return fetch(`${ROOT_API}/api/accounts/${login}/reserveCards`).then(response => response.json());
+  if (login) {
+    return fetch(`${ROOT_API}/api/accounts/${login}/reserveCards`).then(response => response.json());
+  }
+  return Promise.resolve([]);
 };
 
-const getCard = (id: string, login: string): Promise<CardInfo> => {
-  return fetch(`${ROOT_API}/api/cards/${id}?login=${login}`).then(response => response.json());
+const getCard = (id: string, login: string): Promise<CardInfo | null> => {
+  if (id && login) {
+    return fetch(`${ROOT_API}/api/cards/${id}?login=${login}`).then(response => response.json());
+  }
+  return Promise.resolve(null);
 };
 
 // define outside of the component to avoid triggering rerender
@@ -28,28 +34,13 @@ const Sell = () => {
   const [selectedAccount, setSelectedAccount] = useState<string>('');
   const [selectedCard, setSelectedCard] = useState<string>('');
 
-  const getReserveCardsCallback = useCallback(() => {
-    if (selectedAccount) {
-      return getReserveCards(selectedAccount);
-    } else {
-      return Promise.resolve([]);
-    }
-  }, [selectedAccount]);
-
-  const getCardCallback = useCallback(() => {
-    if (selectedAccount && selectedCard) {
-      return getCard(selectedCard, selectedAccount);
-    } else {
-      return Promise.resolve(null);
-    }
-  }, [selectedAccount, selectedCard]);
-
   const [cards, loadingReserveCards, , reloadReserveCards] = useAsyncFunction<CardInfo[]>(
-    getReserveCardsCallback,
-    emptyArray
+    getReserveCards,
+    emptyArray,
+    selectedAccount
   );
 
-  const [card, loadingCard] = useAsyncFunction<CardInfo | null>(getCardCallback, null);
+  const [card, loadingCard] = useAsyncFunction<CardInfo | null>(getCard, null, selectedCard, selectedAccount);
 
   const changeAccount = useCallback((login: string) => {
     setSelectedAccount(login);
@@ -58,6 +49,11 @@ const Sell = () => {
   const selectCard = useCallback((id: string) => {
     setSelectedCard(id);
   }, []);
+
+  const handleAfterSell = () => {
+    setSelectedCard('');
+    reloadReserveCards();
+  };
 
   return (
     <>
@@ -68,7 +64,7 @@ const Sell = () => {
         <ReserveCards cards={cards} selectCard={selectCard} />
       )}
       {selectedCard ? (
-        <SellForm card={card} isPending={loadingCard} login={selectedAccount} afterSell={reloadReserveCards} />
+        <SellForm card={card} isPending={loadingCard} login={selectedAccount} afterSell={handleAfterSell} />
       ) : null}
     </>
   );
