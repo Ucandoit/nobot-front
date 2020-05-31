@@ -1,16 +1,40 @@
+import { LinearProgress, makeStyles } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
 import { AccountSelector } from '../account';
 import { SellForm } from '../auction';
 import { ReserveCards } from '../card';
 import { CardInfo, useAsyncFunction } from '../helpers';
 
+const useStyles = makeStyles({
+  progress: {
+    width: '100%'
+  }
+});
+
+const getReserveCards = (login: string): Promise<CardInfo[]> => {
+  return fetch(`${ROOT_API}/api/accounts/${login}/reserveCards`).then(response => response.json());
+};
+
 const getCard = (id: string, login: string): Promise<CardInfo> => {
   return fetch(`${ROOT_API}/api/cards/${id}?login=${login}`).then(response => response.json());
 };
 
+// define outside of the component to avoid triggering rerender
+const emptyArray: CardInfo[] = [];
+
 const Sell = () => {
+  const classes = useStyles();
+
   const [selectedAccount, setSelectedAccount] = useState<string>('');
   const [selectedCard, setSelectedCard] = useState<string>('');
+
+  const getReserveCardsCallback = useCallback(() => {
+    if (selectedAccount) {
+      return getReserveCards(selectedAccount);
+    } else {
+      return Promise.resolve([]);
+    }
+  }, [selectedAccount]);
 
   const getCardCallback = useCallback(() => {
     if (selectedAccount && selectedCard) {
@@ -20,7 +44,12 @@ const Sell = () => {
     }
   }, [selectedAccount, selectedCard]);
 
-  const [card, isPending] = useAsyncFunction<CardInfo | null>(getCardCallback, null);
+  const [cards, loadingReserveCards, , reloadReserveCards] = useAsyncFunction<CardInfo[]>(
+    getReserveCardsCallback,
+    emptyArray
+  );
+
+  const [card, loadingCard] = useAsyncFunction<CardInfo | null>(getCardCallback, null);
 
   const changeAccount = useCallback((login: string) => {
     setSelectedAccount(login);
@@ -33,31 +62,14 @@ const Sell = () => {
   return (
     <>
       <AccountSelector selectedAccount={selectedAccount} changeAccount={changeAccount} />
-      <ReserveCards account={selectedAccount} selectCard={selectCard} />
-      {selectedCard ? <SellForm card={card} isPending={isPending} login={selectedAccount} /> : null}
-      {/* <div>
-        {loading ? (
-          <div>loading...</div>
-        ) : (
-          <>
-            <div className="reserve-group">
-              {reserveCards.map(card => (
-                <Card key={card.id} card={card} handleCardClick={handleCardClick} />
-              ))}
-            </div>
-            {card ? (
-              <div className="sell">
-                <div>{card.name}</div>
-                <div>
-                  <label>np</label>
-                  <input type="text" value={sellPrice} onChange={handleNpChange} />
-                  <button onClick={sell}>Sell</button>
-                </div>
-              </div>
-            ) : null}
-          </>
-        )}
-      </div> */}
+      {loadingReserveCards ? (
+        <LinearProgress className={classes.progress} />
+      ) : (
+        <ReserveCards cards={cards} selectCard={selectCard} />
+      )}
+      {selectedCard ? (
+        <SellForm card={card} isPending={loadingCard} login={selectedAccount} afterSell={reloadReserveCards} />
+      ) : null}
     </>
   );
 };

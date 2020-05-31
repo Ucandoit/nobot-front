@@ -2,19 +2,25 @@ import { Button, Card, CardContent, CircularProgress, Grid, makeStyles, TextFiel
 import React, { ChangeEvent, useState } from 'react';
 import { CardInfo, utils } from '../helpers';
 
-const useStyles = makeStyles({
-  root: {
-    height: '10rem'
+const useStyles = makeStyles(theme => ({
+  textInput: {
+    height: '2rem',
+    width: '6rem',
+    marginRight: theme.spacing(2)
+  },
+  button: {
+    height: '2rem'
   }
-});
+}));
 
 interface SellFormProps {
   card: CardInfo | null;
   isPending: boolean;
   login: string;
+  afterSell?: () => void;
 }
 
-const SellForm = ({ card, isPending, login }: SellFormProps) => {
+const SellForm = ({ card, isPending, login, afterSell }: SellFormProps) => {
   const classes = useStyles();
   const [sellPrice, setSellPrice] = useState<number>(50000);
 
@@ -23,11 +29,18 @@ const SellForm = ({ card, isPending, login }: SellFormProps) => {
   };
 
   const sell = async () => {
-    await fetch(`${ROOT_API}/api/cards/${card!.id}/sell?login=${login}&sellPrice=${sellPrice}`, { method: 'POST' });
+    try {
+      await fetch(`${ROOT_API}/api/cards/${card!.id}/sell?login=${login}&sellPrice=${sellPrice}`, { method: 'POST' });
+      if (afterSell) {
+        afterSell();
+      }
+    } catch (err) {
+      // TODO error handling
+    }
   };
 
   return (
-    <Grid container justify="center" className={classes.root}>
+    <Grid container justify="center">
       <Card>
         <CardContent>
           {isPending || !card ? (
@@ -47,8 +60,16 @@ const SellForm = ({ card, isPending, login }: SellFormProps) => {
               <div>{card.skill2}</div>
               <div>{card.skill3}</div>
               <div>
-                <TextField variant="outlined" value={sellPrice} onChange={handleSellPriceChange} />
-                <Button variant="contained" color="primary" onClick={sell}>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  value={sellPrice}
+                  onChange={handleSellPriceChange}
+                  InputProps={{
+                    className: classes.textInput
+                  }}
+                />
+                <Button variant="contained" color="primary" className={classes.button} onClick={sell}>
                   Sell
                 </Button>
               </div>

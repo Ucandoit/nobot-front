@@ -1,49 +1,19 @@
-import { Grid, LinearProgress, makeStyles } from '@material-ui/core';
-import React, { useCallback } from 'react';
-import { CardInfo, useAsyncFunction } from '../helpers';
+import { Grid } from '@material-ui/core';
+import React from 'react';
+import { CardInfo } from '../helpers';
 import Card from './Card';
 
-const useStyles = makeStyles(theme => ({
-  progress: {
-    width: '100%'
-  }
-}));
-
 interface ReserveCardsProps {
-  account: string;
+  cards: CardInfo[];
   selectCard: (id: string) => void;
 }
 
-const getReserveCards = (login: string): Promise<CardInfo[]> => {
-  return fetch(`${ROOT_API}/api/accounts/${login}/reserveCards`).then(response => response.json());
-};
-
-// define outside of the component to avoid triggering rerender
-const empty: CardInfo[] = [];
-
-const ReserveCards = ({ account, selectCard }: ReserveCardsProps) => {
-  const classes = useStyles();
-  const getReserveCardsCallback = useCallback(() => {
-    if (account) {
-      return getReserveCards(account);
-    } else {
-      return Promise.resolve([]);
-    }
-  }, [account]);
-  const [cards, isPending] = useAsyncFunction<CardInfo[]>(getReserveCardsCallback, empty);
-  return (
-    <Grid container justify="flex-start">
-      {isPending ? (
-        <LinearProgress className={classes.progress} />
-      ) : (
-        <>
-          {cards.map(card => (
-            <Card key={card.id} card={card} selectCard={selectCard} />
-          ))}
-        </>
-      )}
-    </Grid>
-  );
-};
+const ReserveCards = ({ cards, selectCard }: ReserveCardsProps) => (
+  <Grid container justify="flex-start">
+    {cards.map(card => (
+      <Card key={card.id} card={card} selectCard={selectCard} />
+    ))}
+  </Grid>
+);
 
 export default ReserveCards;

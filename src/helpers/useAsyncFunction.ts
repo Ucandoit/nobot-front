@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const useAsyncFunction = <T>(asyncFunction: () => Promise<T>, defaultValue: T): [T, boolean, string | null] => {
+const useAsyncFunction = <T>(
+  asyncFunction: () => Promise<T>,
+  defaultValue: T
+): [T, boolean, string | null, () => void] => {
   const [state, setState] = useState({
     value: defaultValue,
     isPending: true,
     error: null
   });
-  useEffect(() => {
+
+  const callFunction = useCallback(() => {
     setState(prev => ({
       ...prev,
       isPending: true
@@ -22,8 +26,12 @@ const useAsyncFunction = <T>(asyncFunction: () => Promise<T>, defaultValue: T): 
       );
   }, [asyncFunction, defaultValue]);
 
+  useEffect(() => {
+    callFunction();
+  }, [callFunction]);
+
   const { value, isPending, error } = state;
-  return [value, isPending, error];
+  return [value, isPending, error, callFunction];
 };
 
 export default useAsyncFunction;
