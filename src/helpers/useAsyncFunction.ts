@@ -18,12 +18,12 @@ const useAsyncFunction = <T>(
     }));
     asyncFunction
       .apply(null, params)
-      .then(value => setState({ value, isPending: false, error: null }))
-      .catch(error =>
+      .then(val => setState({ value: val, isPending: false, error: null }))
+      .catch(err =>
         setState({
           value: defaultValue,
           isPending: false,
-          error: error.toString()
+          error: err.toString()
         })
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
