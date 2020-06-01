@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Install typescript
-        run: npm i -g typescript
+      - name: Install dependencies
+        run: yarn
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
