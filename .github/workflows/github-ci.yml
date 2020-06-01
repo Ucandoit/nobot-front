@@ -5,20 +5,20 @@ on:
     branches:
       - develop
       - master
-      - feature/github-ci
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - name: Push to docker hub
-      #   uses: docker/build-push-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
-      #     repository: ucandoit/nobot-front
-      #     tags: 1.0.0,latest
+      - name: Push to docker hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ucandoit/nobot-front
+          # TODO: replace with version in package.json
+          tags: 1.0.0,latest
       - name: Pull docker image and restart
         uses: garygrossgarten/github-action-ssh@release
         with:
