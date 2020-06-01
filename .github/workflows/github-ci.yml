@@ -25,5 +25,4 @@ jobs:
           command: ls -a
           host: ${{ secrets.HOST }}
           username: ubuntu
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          password: ${{ secrets.PASSPHRASE }}
