@@ -1,0 +1,32 @@
+name: Github CI
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push to docker hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ucandoit/nobot-front
+          # TODO: replace with version in package.json
+          tags: 1.0.0,latest
+      - name: Pull docker image and restart
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: |
+            cd docker
+            docker-compose rm -f -s front
+            docker-compose pull front
+            docker-compose up --build -d --no-deps front
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          password: ${{ secrets.PASSPHRASE }}
