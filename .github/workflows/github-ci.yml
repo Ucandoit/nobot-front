@@ -22,7 +22,11 @@ jobs:
       - name: Pull docker image and restart
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd docker && docker-compose up --force-recreate --build -d --no-deps front
+          command: |
+            cd docker
+            docker-compose rm -f -s front
+            docker-compose pull front
+            docker-compose up --build -d --no-deps front
           host: ${{ secrets.HOST }}
           username: ubuntu
           password: ${{ secrets.PASSPHRASE }}
