@@ -20,10 +20,10 @@ jobs:
       #     repository: ucandoit/nobot-front
       #     tags: 1.0.0,latest
       - name: Pull docker image and restart
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: ls -a
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        passphrase: ${{ secrets.PASSPHRASE }}
-        privateKey: ${{ secrets.PRIVATE_KEY}}
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: ls -a
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          passphrase: ${{ secrets.PASSPHRASE }}
+          privateKey: ${{ secrets.PRIVATE_KEY}}
