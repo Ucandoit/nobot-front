@@ -18,7 +18,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --single-quote --print-width 120 --parser typescript --write \"{src,test}/**/*.{ts,tsx}\"",
+    "prettier": "prettier --write \"{src,test}/**/*.{ts,tsx}\"",
     "lint": "yarn prettier && eslint \"{src, test}/**/*.ts\" && eslint \"{src, test}/**/*.tsx\"",
     "docker:build": "docker build -t ucandoit/nobot-front ."
   },

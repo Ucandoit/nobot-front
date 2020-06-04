@@ -6,7 +6,6 @@ import AccountForm from './components/accounts/AccountForm';
 import Accounts from './components/accounts/Accounts';
 import AuctionHistory from './components/auctionHistory/AuctionHistory';
 import CardEdit from './components/card/CardEdit';
-import CardList from './components/card/CardList';
 import DashBoard from './components/dashboard/Dashboard';
 import DrawCard from './components/drawCard/DrawCard';
 import RecruitSystem from './components/recruit/RecruitSystem';
@@ -14,7 +13,7 @@ import Story from './components/story/Story';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
-import { Sell } from './pages';
+import { CardList, Sell } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
