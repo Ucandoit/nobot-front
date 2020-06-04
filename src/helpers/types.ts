@@ -111,3 +111,5 @@ export interface Card {
   history?: string;
   trainSkills?: string;
 }
+
+export type Order = 'asc' | 'desc';

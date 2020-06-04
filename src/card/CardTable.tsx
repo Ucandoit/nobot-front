@@ -7,8 +7,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import React from 'react';
-import { Card, utils } from '../helpers';
+import React, { useCallback } from 'react';
+import { Card, Order, utils } from '../helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,105 +44,123 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-interface CardTableProps {
-  cards: Card[];
+interface CardTableHeader {
+  label: string;
+  property: keyof Card;
+  sortable: boolean;
+  colWidth: 'small' | 'normal' | 'large';
 }
 
-const CardTable = ({ cards }: CardTableProps) => {
+const headers: CardTableHeader[] = [
+  {
+    label: 'No.',
+    property: 'number',
+    sortable: true,
+    colWidth: 'small'
+  },
+  {
+    label: 'Img',
+    property: 'faceUrl',
+    sortable: true,
+    colWidth: 'small'
+  },
+  {
+    label: 'Name',
+    property: 'name',
+    sortable: true,
+    colWidth: 'normal'
+  },
+  {
+    label: 'Rarity',
+    property: 'rarity',
+    sortable: true,
+    colWidth: 'small'
+  },
+  {
+    label: 'Property',
+    property: 'property',
+    sortable: true,
+    colWidth: 'small'
+  },
+  {
+    label: 'Cost',
+    property: 'cost',
+    sortable: true,
+    colWidth: 'small'
+  },
+  {
+    label: 'Military',
+    property: 'military',
+    sortable: true,
+    colWidth: 'small'
+  },
+  {
+    label: 'Job',
+    property: 'job',
+    sortable: true,
+    colWidth: 'small'
+  }
+];
+
+interface CardTableProps {
+  cards: Card[];
+  sort: keyof Card;
+  order: Order;
+  changeSort: (sort: keyof Card) => void;
+}
+
+const CardTable = ({ cards, sort, order, changeSort }: CardTableProps) => {
   const classes = useStyles();
-  // const [order, setOrder] = React.useState<Order>('asc');
-  // const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
-  // const [selected, setSelected] = React.useState<string[]>([]);
-  // const [page, setPage] = React.useState(0);
-  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  // const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Card) => {
-  //   const isAsc = orderBy === property && order === 'asc';
-  //   setOrder(isAsc ? 'desc' : 'asc');
-  //   setOrderBy(property);
-  // };
-
-  // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   let newSelected: string[] = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-  //   }
-
-  //   setSelected(newSelected);
-  // };
-
-  // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const onTableHeaderClick = useCallback(
+    (property: keyof Card) => () => {
+      changeSort(property);
+    },
+    [changeSort]
+  );
 
   return (
     <TableContainer>
       <Table className={classes.table} aria-labelledby="tableTitle" size="small" aria-label="card table">
         <TableHead className={classes.header}>
           <TableRow>
-            <TableCell
-              align="left"
-              className={classes.smallCell}
-              // sortDirection={orderBy === headCell.id ? order : false}
-            >
-              <TableSortLabel
-              // active={orderBy === headCell.id}
-              // direction={orderBy === headCell.id ? order : 'asc'}
-              // onClick={createSortHandler(headCell.id)}
+            {headers.map(({ label, property, sortable, colWidth }) => (
+              <TableCell
+                key={property}
+                className={colWidth === 'small' ? classes.smallCell : ''}
+                sortDirection={sort === property ? order : false}
               >
-                No.
-                {/* {orderBy === headCell.id ? (
-                  <span className={classes.visuallyHidden}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                  </span>
-                ) : null} */}
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="left" className={classes.smallCell}>
-              Img
-            </TableCell>
-            <TableCell align="left">
-              <TableSortLabel>Name</TableSortLabel>
-            </TableCell>
-            <TableCell align="left" className={classes.smallCell}>
-              <TableSortLabel>Rarity</TableSortLabel>
-            </TableCell>
-            <TableCell align="left" className={classes.smallCell}>
-              <TableSortLabel>Property</TableSortLabel>
-            </TableCell>
-            <TableCell align="left" className={classes.smallCell}>
-              <TableSortLabel>Cost</TableSortLabel>
-            </TableCell>
-            <TableCell align="left" className={classes.smallCell}>
-              <TableSortLabel>Military</TableSortLabel>
-            </TableCell>
-            <TableCell align="left" className={classes.smallCell}>
-              <TableSortLabel>Job</TableSortLabel>
-            </TableCell>
+                {sortable ? (
+                  <TableSortLabel
+                    active={sort === property}
+                    direction={sort === property ? order : 'asc'}
+                    onClick={onTableHeaderClick(property)}
+                  >
+                    {label}
+                  </TableSortLabel>
+                ) : (
+                  label
+                )}
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {cards.map(card => (
             <TableRow hover key={card.id}>
-              <TableCell align="left">{card.number}</TableCell>
-              <TableCell align="left">
+              <TableCell>{card.number}</TableCell>
+              <TableCell>
                 <Avatar src={card.faceUrl} variant="square" className={classes.faceImg} />
               </TableCell>
-              <TableCell align="left">{card.name}</TableCell>
-              <TableCell align="left">
+              <TableCell>{card.name}</TableCell>
+              <TableCell>
                 {card.rarity}
                 {utils.getStar(card.star)}
               </TableCell>
-              <TableCell align="left">{card.property}</TableCell>
-              <TableCell align="left">{card.cost}</TableCell>
-              <TableCell align="left">{card.military}</TableCell>
-              <TableCell align="left">{card.job}</TableCell>
+              <TableCell>{card.property}</TableCell>
+              <TableCell>{card.cost}</TableCell>
+              <TableCell>{card.military}</TableCell>
+              <TableCell>{card.job}</TableCell>
             </TableRow>
           ))}
         </TableBody>

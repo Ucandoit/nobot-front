@@ -1,8 +1,7 @@
 import { makeStyles, Paper, TablePagination } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
 import { CardTable, CardTableToolbar } from '../card';
-import { useAsyncFunction } from '../helpers';
-import { Card } from '../helpers/types';
+import { Card, Order, useAsyncFunction } from '../helpers';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -10,13 +9,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-type Order = 'ASC' | 'DESC';
 type ListAndCount = [Card[], number];
 
 const getCards = (page: number, size: number, sort: string, order: 'ASC' | 'DESC'): Promise<ListAndCount> => {
-  return fetch(`${ROOT_API}/api/cards?page=${page}&size=${size}&sort=${sort}&order=${order}`).then(response =>
-    response.json()
-  );
+  return fetch(
+    `${ROOT_API}/api/cards?page=${page}&size=${size}&sort=${sort}&order=${order.toUpperCase()}`
+  ).then(response => response.json());
 };
 
 const initialValue: ListAndCount = [[], 0];
@@ -26,11 +24,10 @@ const initialValue: ListAndCount = [[], 0];
 const CardList: React.FC = () => {
   const classes = useStyles();
 
-  // const location = useLocation<{ page: number; rarity: string }>();
   const [page, setPage] = useState(0);
   const [size, setSize] = React.useState(10);
   const [sort, setSort] = React.useState<keyof Card>('number');
-  const [order, setOrder] = React.useState<Order>('ASC');
+  const [order, setOrder] = React.useState<Order>('asc');
 
   const [[cards, count]] = useAsyncFunction<ListAndCount>(getCards, initialValue, page, size, sort, order);
 
@@ -46,11 +43,20 @@ const CardList: React.FC = () => {
     setPage(0);
   }, []);
 
+  const handleSortChange = useCallback(
+    (property: keyof Card) => {
+      const isAsc = sort === property && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
+      setSort(property);
+    },
+    [order, sort]
+  );
+
   return (
     <>
       <Paper className={classes.paper}>
         <CardTableToolbar />
-        <CardTable cards={cards} />
+        <CardTable cards={cards} sort={sort} order={order} changeSort={handleSortChange} />
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
