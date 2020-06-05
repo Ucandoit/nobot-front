@@ -16,7 +16,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report
-          path: coverage
+          path: coverage/lcov.info
   sonarCloud:
     name: SonarCloud Trigger
     needs: build
@@ -29,6 +29,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: code-coverage-report
+          path: coverage
       - name: test download
         run: |
           pwd
