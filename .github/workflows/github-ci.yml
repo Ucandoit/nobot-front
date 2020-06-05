@@ -13,10 +13,10 @@ jobs:
       - name: Run tests
         run: yarn test
       - name: Archive code coverage results
-      uses: actions/upload-artifact@v2
-      with:
-        name: code-coverage-report
-        path: coverage/lcov.info
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage/lcov.info
   sonarCloud:
     name: SonarCloud Trigger
     needs: build
@@ -26,10 +26,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download code coverage results
-      uses: actions/download-artifact@v2
-      with:
-        name: code-coverage-report
-        path: coverage/lcov.info
+        uses: actions/download-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage/lcov.info
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@v1.3
         env:
