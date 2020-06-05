@@ -6,61 +6,60 @@ jobs:
   build:
     name: Build and tests
     runs-on: ubuntu-latest
-    container: node:alpine
     steps:
       - uses: actions/checkout@v2
-      - name: current dir
-        run: pwd
-      # - name: Install dependencies
-      #   run: yarn
-      # - name: Run tests
-      #   run: yarn test
-      # - name: Archive code coverage results
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: code-coverage-report
-      #     path: coverage/lcov.info
-  # sonarCloud:
-  #   name: SonarCloud Trigger
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Download code coverage results
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: code-coverage-report
-  #         path: coverage
-  #     - name: Analyze with SonarCloud
-  #       uses: SonarSource/sonarcloud-github-action@v1.3
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  # deploy:
-  #   name: Deploy to production server
-  #   needs: sonarCloud
-  #   if: ${{ github.ref == 'refs/heads/develop' }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Push to docker hub
-  #       uses: docker/build-push-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKER_USERNAME }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
-  #         repository: ucandoit/nobot-front
-  #         # TODO: replace with version in package.json
-  #         tags: 1.0.0,latest
-  #     - name: Pull docker image and restart
-  #       uses: garygrossgarten/github-action-ssh@release
-  #       with:
-  #         command: |
-  #           cd docker
-  #           docker-compose rm -f -s front
-  #           docker-compose pull front
-  #           docker-compose up --build -d --no-deps front
-  #         host: ${{ secrets.HOST }}
-  #         username: ubuntu
-  #         password: ${{ secrets.PASSPHRASE }}
+      - name: Install dependencies
+        run: yarn
+      - name: Run tests
+        run: yarn test
+      - name: change file path in lcov.info
+        run: sed -i 's|SF:/home/runner/work/nobot-front/nobot-front/|SF:|g' coverage/lcov.info
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage/lcov.info
+  sonarCloud:
+    name: SonarCloud Trigger
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Download code coverage results
+        uses: actions/download-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage
+      - name: Analyze with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v1.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  deploy:
+    name: Deploy to production server
+    needs: sonarCloud
+    if: ${{ github.ref == 'refs/heads/develop' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Push to docker hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ucandoit/nobot-front
+          # TODO: replace with version in package.json
+          tags: 1.0.0,latest
+      - name: Pull docker image and restart
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: |
+            cd docker
+            docker-compose rm -f -s front
+            docker-compose pull front
+            docker-compose up --build -d --no-deps front
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          password: ${{ secrets.PASSPHRASE }}
