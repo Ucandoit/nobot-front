@@ -51,56 +51,35 @@ interface CardTableHeader {
   colWidth: 'small' | 'normal' | 'large';
 }
 
-const headers: CardTableHeader[] = [
-  {
-    label: 'No.',
-    property: 'number',
-    sortable: true,
-    colWidth: 'small'
-  },
-  {
-    label: 'Img',
-    property: 'faceUrl',
-    sortable: true,
-    colWidth: 'small'
-  },
-  {
-    label: 'Name',
-    property: 'name',
-    sortable: true,
-    colWidth: 'normal'
-  },
-  {
-    label: 'Rarity',
-    property: 'rarity',
-    sortable: true,
-    colWidth: 'small'
-  },
-  {
-    label: 'Property',
-    property: 'property',
-    sortable: true,
-    colWidth: 'small'
-  },
-  {
-    label: 'Cost',
-    property: 'cost',
-    sortable: true,
-    colWidth: 'small'
-  },
-  {
-    label: 'Military',
-    property: 'military',
-    sortable: true,
-    colWidth: 'small'
-  },
-  {
-    label: 'Job',
-    property: 'job',
-    sortable: true,
-    colWidth: 'small'
-  }
-];
+const headers: CardTableHeader[] = [];
+
+const addHeader = (
+  label: string,
+  property: keyof Card,
+  sortable = true,
+  colWidth: 'small' | 'normal' | 'large' = 'small'
+) => {
+  headers.push({
+    label,
+    property,
+    sortable,
+    colWidth
+  });
+};
+
+addHeader('No.', 'number');
+addHeader('Img', 'faceUrl', false);
+addHeader('Name', 'name', true, 'normal');
+addHeader('Rarity', 'rarity');
+addHeader('Property', 'property');
+addHeader('Cost', 'cost');
+addHeader('Military', 'military');
+addHeader('Job', 'job');
+addHeader('Atk', 'finalAtk');
+addHeader('Def', 'finalDef');
+addHeader('Spd', 'finalSpd');
+addHeader('Vir', 'finalVir');
+addHeader('Stg', 'finalStg');
 
 interface CardTableProps {
   cards: Card[];
@@ -161,6 +140,11 @@ const CardTable = ({ cards, sort, order, changeSort }: CardTableProps) => {
               <TableCell>{card.cost}</TableCell>
               <TableCell>{card.military}</TableCell>
               <TableCell>{card.job}</TableCell>
+              <TableCell>{card.finalAtk}</TableCell>
+              <TableCell>{card.finalDef}</TableCell>
+              <TableCell>{card.finalSpd}</TableCell>
+              <TableCell>{card.finalVir}</TableCell>
+              <TableCell>{card.finalStg}</TableCell>
             </TableRow>
           ))}
         </TableBody>

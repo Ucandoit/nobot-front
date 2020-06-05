@@ -113,3 +113,12 @@ export interface Card {
 }
 
 export type Order = 'asc' | 'desc';
+
+export interface CardFilters {
+  rarity?: string;
+  star?: number;
+  property?: string;
+  cost?: number;
+  military?: string;
+  job?: string;
+}
