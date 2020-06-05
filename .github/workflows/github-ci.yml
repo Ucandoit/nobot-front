@@ -32,9 +32,9 @@ jobs:
           path: coverage/lcov.info
       - name: test download
         run: |
-        pwd
-        ls
-        cat coverage/lcov.info
+          pwd
+          ls
+          cat coverage/lcov.info
       # - name: Analyze with SonarCloud
       #   uses: SonarSource/sonarcloud-github-action@v1.3
       #   env:
