@@ -110,6 +110,8 @@ export interface Card {
   slogan?: string;
   history?: string;
   trainSkills?: string;
+  tradable: boolean;
+  display: boolean;
 }
 
 export type Order = 'asc' | 'desc';
