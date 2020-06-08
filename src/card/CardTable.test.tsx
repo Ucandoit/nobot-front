@@ -1,7 +1,7 @@
 import { TableHead, TableSortLabel } from '@material-ui/core';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { cards } from './cards.mock';
+import { cards } from '../mocks';
 import CardTable from './CardTable';
 
 const changeSort = jest.fn();

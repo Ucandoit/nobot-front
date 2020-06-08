@@ -124,3 +124,5 @@ export interface CardFilters {
   military?: string;
   job?: string;
 }
+
+export type CardListAndCount = [Card[], number];

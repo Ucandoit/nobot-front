@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardList should render correctly 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Paper))
+    className="makeStyles-paper-1"
+  >
+    <CardTableToolbar
+      changeFilter={[Function]}
+      filters={Object {}}
+      resetFilter={[Function]}
+    />
+    <CardTable
+      cards={
+        Array [
+          Object {
+            "cost": 3,
+            "display": true,
+            "faceUrl": "http://210.140.157.168/img/card/still/character_still_00034_2067324248.png",
+            "finalAtk": 197,
+            "finalDef": 140,
+            "finalSpd": 164,
+            "finalStg": 166,
+            "finalVir": 142,
+            "history": "長尾為景の次男。上杉憲政から関東管領を継ぎ上杉姓となる。毘沙門天の旗を押し出して勝ち戦を重ね「越後の龍」として恐れられた。",
+            "id": 3,
+            "illustUrl": "http://210.140.157.168/img/card/illustration/card_chara_00034_712855454.png",
+            "initialAtk": 97,
+            "initialDef": 75,
+            "initialSpd": 84,
+            "initialStg": 91,
+            "initialVir": 77,
+            "job": "武士",
+            "military": "騎馬",
+            "name": "上杉ニャンしん",
+            "number": 1001,
+            "personality": "我らには毘沙門天の加護あり！",
+            "property": "火",
+            "rarity": "極",
+            "realName": "上杉謙信",
+            "slogan": "越後の龍",
+            "star": 0,
+            "tradable": true,
+            "trainSkills": "越後の龍, 必殺, 鼓舞, 馬沓, 伏兵看破, 一騎駆け",
+          },
+          Object {
+            "cost": 3,
+            "display": true,
+            "faceUrl": "http://210.140.157.168/img/card/still/character_still_00040_1306553348.png",
+            "finalAtk": 144,
+            "finalDef": 164,
+            "finalSpd": 162,
+            "finalStg": 143,
+            "finalVir": 198,
+            "history": "信長の妹。夫の浅井長政が信長と決裂して敗死。織田家に戻り柴田勝家と再婚するが、勝家は秀吉と争って敗れ、自害。市も勝家に従った。",
+            "id": 4,
+            "illustUrl": "http://210.140.157.168/img/card/illustration/card_chara_00040_488371038.png",
+            "initialAtk": 74,
+            "initialDef": 84,
+            "initialSpd": 82,
+            "initialStg": 73,
+            "initialVir": 98,
+            "job": "姫",
+            "military": "足軽",
+            "name": "おミーちの方",
+            "number": 1002,
+            "personality": "猿面冠者の妻になどなりませぬ",
+            "property": "水",
+            "rarity": "極",
+            "realName": "お市の方",
+            "slogan": "悲運の姫君",
+            "star": 0,
+            "tradable": true,
+            "trainSkills": "小豆袋, 治療, 鼓舞, 迅速, 活法",
+          },
+          Object {
+            "cost": 3,
+            "display": true,
+            "faceUrl": "http://210.140.157.168/img/card/still/character_still_00050_2564820845.png",
+            "finalAtk": 186,
+            "finalDef": 166,
+            "finalSpd": 162,
+            "finalStg": 158,
+            "finalVir": 137,
+            "history": "織田信秀の子。尾張・美濃を平定後、「天下布武」を標榜して上洛。その後も各地を席巻し、半ば天下を握るが、明智光秀の謀叛で死去。",
+            "id": 5,
+            "illustUrl": "http://210.140.157.168/img/card/illustration/card_chara_00050_1597526338.png",
+            "initialAtk": 96,
+            "initialDef": 91,
+            "initialSpd": 87,
+            "initialStg": 83,
+            "initialVir": 62,
+            "job": "武士",
+            "military": "鉄砲",
+            "name": "織田のぶニャが",
+            "number": 1003,
+            "personality": "…是非に及ばず",
+            "property": "火",
+            "rarity": "極",
+            "realName": "織田信長",
+            "slogan": "第六天魔王",
+            "star": 0,
+            "tradable": true,
+            "trainSkills": "第六天魔王, 雨火縄, 必殺, 早合, 伏兵看破, 三段撃ち",
+          },
+          Object {
+            "cost": 2.5,
+            "display": true,
+            "faceUrl": "http://210.140.157.168/img/card/still/character_still_00100_142767575.png",
+            "finalAtk": 184,
+            "finalDef": 115,
+            "finalSpd": 117,
+            "finalStg": 130,
+            "finalVir": 135,
+            "history": "真田昌幸の次男。本名は信繁。関ヶ原戦後、豊臣家の招きで大坂へ入城。大坂夏の陣で徳川本陣に迫る奮戦を見せ「日本一の兵」と称された。",
+            "id": 7,
+            "illustUrl": "http://210.140.157.168/img/card/illustration/card_chara_00100_1310624017.png",
+            "initialAtk": 94,
+            "initialDef": 70,
+            "initialSpd": 72,
+            "initialStg": 80,
+            "initialVir": 75,
+            "job": "武士",
+            "military": "騎馬",
+            "name": "さニャだ幸村",
+            "number": 1004,
+            "personality": "さニャだ左衛門佐、 義によって参戦いたす！",
+            "property": "火",
+            "rarity": "極",
+            "realName": "真田幸村",
+            "slogan": "日本一の兵",
+            "star": 0,
+            "tradable": true,
+            "trainSkills": "真田丸, 一騎駆け, 馬廻衆, 突撃, 信義仁",
+          },
+          Object {
+            "cost": 3,
+            "display": true,
+            "faceUrl": "http://210.140.157.168/img/card/still/character_still_00109_1467951905.png",
+            "finalAtk": 180,
+            "finalDef": 193,
+            "finalSpd": 149,
+            "finalStg": 157,
+            "finalVir": 131,
+            "history": "島津貴久の次男。兄の義久を補佐し、島津家の九州制覇に貢献した。関ヶ原では西軍に属し、敵軍中央を突破して海路帰国。惟新と号した。",
+            "id": 8,
+            "illustUrl": "http://210.140.157.168/img/card/illustration/card_chara_00109_1674371804.png",
+            "initialAtk": 90,
+            "initialDef": 93,
+            "initialSpd": 79,
+            "initialStg": 82,
+            "initialVir": 81,
+            "job": "武士",
+            "military": "騎馬",
+            "name": "シャムづ義弘",
+            "number": 1005,
+            "personality": "死にたくない者はそこをどけ！",
+            "property": "地",
+            "rarity": "極",
+            "realName": "島津義弘",
+            "slogan": "薩摩の鬼武者",
+            "star": 0,
+            "tradable": true,
+            "trainSkills": undefined,
+          },
+        ]
+      }
+      changeSort={[Function]}
+      order="asc"
+      sort="number"
+    />
+    <WithStyles(ForwardRef(TablePagination))
+      component="div"
+      count={20}
+      onChangePage={[Function]}
+      onChangeRowsPerPage={[Function]}
+      page={0}
+      rowsPerPage={10}
+      rowsPerPageOptions={
+        Array [
+          5,
+          10,
+          25,
+        ]
+      }
+    />
+  </WithStyles(ForwardRef(Paper))>
+</Fragment>
+`;

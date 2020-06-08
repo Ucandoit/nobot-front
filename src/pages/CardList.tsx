@@ -1,7 +1,8 @@
 import { makeStyles, Paper, TablePagination } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
+import { getCards } from '../api';
 import { CardTable, CardTableToolbar } from '../card';
-import { Card, CardFilters, Order, useAsyncFunction } from '../helpers';
+import { Card, CardFilters, CardListAndCount, Order, useAsyncFunction } from '../helpers';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -9,28 +10,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-type ListAndCount = [Card[], number];
-
-const getCards = (
-  page: number,
-  size: number,
-  sort: string,
-  order: 'ASC' | 'DESC',
-  filters: CardFilters
-): Promise<ListAndCount> => {
-  return fetch(
-    `${ROOT_API}/api/cards?page=${page}&size=${size}&sort=${sort}&order=${order.toUpperCase()}&filters=${JSON.stringify(
-      filters,
-      (key: string, value: string) => {
-        if (value) {
-          return value;
-        }
-      }
-    )}`
-  ).then(response => response.json());
-};
-
-const initialValue: ListAndCount = [[], 0];
+const initialValue: CardListAndCount = [[], 0];
 
 const CardList: React.FC = () => {
   const classes = useStyles();
@@ -40,8 +20,8 @@ const CardList: React.FC = () => {
   const [sort, setSort] = useState<keyof Card>('number');
   const [order, setOrder] = useState<Order>('asc');
   const [filters, setFilters] = useState<CardFilters>({});
-  console.log(filters);
-  const [[cards, count]] = useAsyncFunction<ListAndCount>(getCards, initialValue, page, size, sort, order, filters);
+
+  const [[cards, count]] = useAsyncFunction<CardListAndCount>(getCards, initialValue, page, size, sort, order, filters);
 
   const handleChangePage = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
