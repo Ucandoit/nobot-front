@@ -2,7 +2,7 @@ const menu = [
   {
     name: 'Dashboard',
     to: '/',
-    icon: 'mail'
+    icon: 'dashboard'
   },
   {
     name: 'Accounts',
@@ -17,7 +17,7 @@ const menu = [
   {
     name: 'Auction History',
     to: '/auction_history',
-    icon: 'mail'
+    icon: 'shopping_cart'
   },
   {
     name: 'Sell',
@@ -42,7 +42,7 @@ const menu = [
   {
     name: 'Cards',
     to: '/cards',
-    icon: 'mail'
+    icon: 'style'
   }
 ];
 

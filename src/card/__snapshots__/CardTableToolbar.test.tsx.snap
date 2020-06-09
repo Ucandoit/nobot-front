@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardTableToolbar should render correctly 1`] = `
+<WithStyles(ForwardRef(Toolbar))
+  className="makeStyles-root-1"
+>
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "煌",
+        "極",
+        "稀",
+        "珍",
+        "並",
+        "宝",
+        "誉",
+      ]
+    }
+    label="Rarity"
+    property="rarity"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        0,
+        1,
+        2,
+      ]
+    }
+    label="Star"
+    property="star"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "火",
+        "地",
+        "風",
+        "水",
+        "空",
+      ]
+    }
+    label="Property"
+    property="property"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        4,
+      ]
+    }
+    label="Cost"
+    property="cost"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "騎馬",
+        "足軽",
+        "鉄砲",
+      ]
+    }
+    label="Military"
+    property="military"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "武士",
+        "軍師",
+        "僧侶",
+        "忍者",
+        "剣豪",
+        "傾奇",
+        "姫",
+        "茶人",
+        "商人",
+        "水軍",
+      ]
+    }
+    label="Job"
+    property="job"
+  />
+  <WithStyles(ForwardRef(Button))
+    color="secondary"
+    onClick={[MockFunction]}
+    variant="contained"
+  >
+    Reset
+  </WithStyles(ForwardRef(Button))>
+</WithStyles(ForwardRef(Toolbar))>
+`;
+
+exports[`CardTableToolbar should render correctly with filters 1`] = `
+<WithStyles(ForwardRef(Toolbar))
+  className="makeStyles-root-1"
+>
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "煌",
+        "極",
+        "稀",
+        "珍",
+        "並",
+        "宝",
+        "誉",
+      ]
+    }
+    label="Rarity"
+    property="rarity"
+    value="煌"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        0,
+        1,
+        2,
+      ]
+    }
+    label="Star"
+    property="star"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "火",
+        "地",
+        "風",
+        "水",
+        "空",
+      ]
+    }
+    label="Property"
+    property="property"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        1,
+        1.5,
+        2,
+        2.5,
+        3,
+        4,
+      ]
+    }
+    label="Cost"
+    property="cost"
+    value={1.5}
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "騎馬",
+        "足軽",
+        "鉄砲",
+      ]
+    }
+    label="Military"
+    property="military"
+  />
+  <FilterField
+    changeFilter={[MockFunction]}
+    items={
+      Array [
+        "武士",
+        "軍師",
+        "僧侶",
+        "忍者",
+        "剣豪",
+        "傾奇",
+        "姫",
+        "茶人",
+        "商人",
+        "水軍",
+      ]
+    }
+    label="Job"
+    property="job"
+  />
+  <WithStyles(ForwardRef(Button))
+    color="secondary"
+    onClick={[MockFunction]}
+    variant="contained"
+  >
+    Reset
+  </WithStyles(ForwardRef(Button))>
+</WithStyles(ForwardRef(Toolbar))>
+`;
