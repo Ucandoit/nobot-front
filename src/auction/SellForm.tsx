@@ -30,7 +30,9 @@ const SellForm = ({ card, isPending, login, afterSell }: SellFormProps) => {
 
   const sell = async () => {
     try {
-      await fetch(`${ROOT_API}/api/cards/${card!.id}/sell?login=${login}&sellPrice=${sellPrice}`, { method: 'POST' });
+      await fetch(`${ROOT_API}/api/auction/sell/?login=${login}&cardId=${card!.id}&sellPrice=${sellPrice}`, {
+        method: 'POST'
+      });
       if (afterSell) {
         afterSell();
       }
