@@ -13,7 +13,7 @@ import Story from './components/story/Story';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
-import { CardList, Sell } from './pages';
+import { CardList, Sell, SellStateList } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -95,8 +95,11 @@ const App: React.FC = () => {
                 <Route path="/cards/:id">
                   <CardEdit />
                 </Route>
-                <Route path="/auction/sell">
+                <Route exact path="/auction/sell">
                   <Sell />
+                </Route>
+                <Route path="/auction/sell/status">
+                  <SellStateList />
                 </Route>
               </Switch>
             </Container>

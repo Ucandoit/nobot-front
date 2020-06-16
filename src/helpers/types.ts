@@ -114,8 +114,6 @@ export interface Card {
   display: boolean;
 }
 
-export type Order = 'asc' | 'desc';
-
 export interface CardFilters {
   rarity?: string;
   star?: number;
@@ -126,3 +124,15 @@ export interface CardFilters {
 }
 
 export type CardListAndCount = [Card[], number];
+
+export interface SellState {
+  id: number;
+  status: string;
+  price: number;
+  postDate: Date;
+  accountCard: AccountCard;
+}
+
+export interface AccountCard {
+  card: Card;
+}

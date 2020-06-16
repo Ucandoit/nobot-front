@@ -8,7 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import React, { useCallback } from 'react';
-import { Card, Order, utils } from '../helpers';
+import { Order } from '../commons';
+import { Card, utils } from '../helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
