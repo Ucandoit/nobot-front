@@ -7,11 +7,13 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TableSortLabel
+  TableSortLabel,
+  Toolbar
 } from '@material-ui/core';
-import get from 'lodash/get';
 import React, { useCallback } from 'react';
-import { ListAndCount, PaginationOption, SortOption, TableColumn } from './types';
+import { ListAndCount } from '../../helpers';
+import FilterField from './FilterField';
+import { FilterField as FilterFieldType, FilterOptions, PaginationOption, SortOption, TableColumn } from './types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,17 +52,17 @@ const useStyles = makeStyles(theme => ({
 export interface TableProps<T> {
   columns: TableColumn<T>[];
   records: ListAndCount<T>;
-  identifier: keyof T;
   paginationOption: PaginationOption;
   sortOption: SortOption<T>;
+  filterOptions: FilterOptions<T>;
 }
 
 export const Table = <T,>({
   columns,
   records: [rows, count],
-  identifier,
   paginationOption: { page, size, changePage, changeRowsPerPage },
-  sortOption: { sort, order, changeSort }
+  sortOption: { sort, order, changeSort },
+  filterOptions: { filters, filterFields, changeFilter }
 }: TableProps<T>) => {
   const classes = useStyles();
 
@@ -72,6 +74,19 @@ export const Table = <T,>({
   );
   return (
     <>
+      <Toolbar className={classes.root}>
+        {filterFields.map((field: FilterFieldType<T>, index) => {
+          const props = {
+            ...field,
+            value: filters[field.property] as any,
+            changeFilter
+          };
+          return <FilterField key={index} {...props} />;
+        })}
+        {/* <Button variant="contained" color="secondary" onClick={resetFilter}>
+          Reset
+        </Button> */}
+      </Toolbar>
       <TableContainer>
         <MuiTable className={classes.table} size="small" aria-label="table">
           <TableHead className={classes.header}>
@@ -82,7 +97,7 @@ export const Table = <T,>({
                   className={colWidth === 'small' ? classes.smallCell : ''}
                   sortDirection={sort === property ? order : false}
                 >
-                  {sortable ? (
+                  {sortable && typeof property !== 'function' ? (
                     <TableSortLabel
                       active={sort === property}
                       direction={sort === property ? order : 'asc'}
@@ -98,10 +113,12 @@ export const Table = <T,>({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow hover key={row[identifier] as any}>
+            {rows.map((row, index) => (
+              <TableRow hover key={index}>
                 {columns.map(header => (
-                  <TableCell key={`${row[identifier]}-${header.property}`}>{get(row, header.property)}</TableCell>
+                  <TableCell key={`${index}-${header.property}`}>
+                    {typeof header.property === 'function' ? header.property(row) : row[header.property]}
+                  </TableCell>
                 ))}
               </TableRow>
             ))}

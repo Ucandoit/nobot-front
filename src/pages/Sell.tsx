@@ -1,5 +1,6 @@
 import { LinearProgress, makeStyles } from '@material-ui/core';
 import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AccountSelector } from '../account';
 import { SellForm } from '../auction';
 import { ReserveCards } from '../card';
@@ -57,6 +58,7 @@ const Sell = () => {
 
   return (
     <>
+      <Link to="/auction/sell/status">Status</Link>
       <AccountSelector selectedAccount={selectedAccount} changeAccount={changeAccount} />
       {loadingReserveCards ? (
         <LinearProgress className={classes.progress} />

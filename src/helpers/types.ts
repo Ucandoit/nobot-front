@@ -125,14 +125,19 @@ export interface CardFilters {
 
 export type CardListAndCount = [Card[], number];
 
+export type ListAndCount<T> = [T[], number];
+
 export interface SellState {
   id: number;
   status: string;
   price: number;
   postDate: Date;
-  accountCard: AccountCard;
+  accountCard?: AccountCard;
+  archivedData?: AccountCard;
 }
 
 export interface AccountCard {
+  cardId: string;
   card: Card;
+  login: string;
 }
