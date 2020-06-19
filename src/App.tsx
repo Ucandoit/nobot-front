@@ -9,11 +9,10 @@ import CardEdit from './components/card/CardEdit';
 import DashBoard from './components/dashboard/Dashboard';
 import DrawCard from './components/drawCard/DrawCard';
 import RecruitSystem from './components/recruit/RecruitSystem';
-import Story from './components/story/Story';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
-import { CardList, Sell, SellStateList } from './pages';
+import { CardList, Sell, SellStateList, Story } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
