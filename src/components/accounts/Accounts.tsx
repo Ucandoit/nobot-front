@@ -1,7 +1,7 @@
-import React from 'react';
-import * as request from 'superagent';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import * as request from 'superagent';
 import { Account } from '../../helpers/types';
 
 const Accounts: React.FC = props => {
@@ -15,6 +15,8 @@ const Accounts: React.FC = props => {
     <div>
       <h1>Accounts</h1>
       <Link to="/account/create">Create</Link>
+      <br />
+      <Link to="/account/mobile/create">Create mobile</Link>
       {accounts.map((account: Account, index: number) => (
         <div key={index}>
           <span style={{ marginRight: '10px' }}>{account.login}</span>

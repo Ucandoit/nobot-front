@@ -12,7 +12,7 @@ import RecruitSystem from './components/recruit/RecruitSystem';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
-import { CardList, Sell, SellStateList, Story } from './pages';
+import { CardList, MobileAccountCreate, Sell, SellStateList, Story } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -99,6 +99,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/auction/sell/status">
                   <SellStateList />
+                </Route>
+                <Route path="/account/mobile/create">
+                  <MobileAccountCreate />
                 </Route>
               </Switch>
             </Container>

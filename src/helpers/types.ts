@@ -65,10 +65,11 @@ export interface Account {
   name: string;
   cookie: string;
   expirationDate: string;
-  startHour: number;
-  dailySearch: number;
-  enabled: boolean;
+  startHour?: number;
+  dailySearch?: number;
+  enabled?: boolean;
   np?: number;
+  mobile?: boolean;
 }
 
 export interface WarConfig {
