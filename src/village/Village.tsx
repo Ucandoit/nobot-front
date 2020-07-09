@@ -1,5 +1,6 @@
 import React from 'react';
 import { VillageInfo } from '../helpers';
+import Buildings from './Buildings';
 import Resources from './Resources';
 
 interface VillageProps {
@@ -7,7 +8,16 @@ interface VillageProps {
 }
 
 const Village: React.FC<VillageProps> = ({ village }) => {
-  return <>{village ? <Resources resources={village.resourceInfo} /> : null}</>;
+  return (
+    <>
+      {village ? (
+        <>
+          <Resources resources={village.resourceInfo} />
+          <Buildings areas={village.areas} />
+        </>
+      ) : null}
+    </>
+  );
 };
 
 export default Village;
