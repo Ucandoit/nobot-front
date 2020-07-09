@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-interface AccountSelectorProps {
+export interface AccountSelectorProps {
   selectedAccount: string;
   changeAccount: (login: string) => void;
 }

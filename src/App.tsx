@@ -6,13 +6,12 @@ import AccountForm from './components/accounts/AccountForm';
 import Accounts from './components/accounts/Accounts';
 import AuctionHistory from './components/auctionHistory/AuctionHistory';
 import CardEdit from './components/card/CardEdit';
-import DashBoard from './components/dashboard/Dashboard';
 import DrawCard from './components/drawCard/DrawCard';
 import RecruitSystem from './components/recruit/RecruitSystem';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
-import { CardList, MobileAccountCreate, Sell, SellStateList, Story } from './pages';
+import { CardList, Dashboard, MobileAccountCreate, Sell, SellStateList, Story } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,7 +58,7 @@ const App: React.FC = () => {
                   <Redirect to="/dashboard" />
                 </Route>
                 <Route path="/dashboard">
-                  <DashBoard />
+                  <Dashboard />
                 </Route>
                 <Route exact path="/accounts">
                   <Accounts />

@@ -16,24 +16,6 @@ const DashBoard: React.FC = props => {
     setAccounts(response.body._embedded.accounts);
   };
 
-  // const startWrestling = (login: string) => {
-  //   request.get(`${ROOT_API}/api/rest/wrestle/startWrestling?login=${login}`).then(res => {
-  //     console.log(res.body);
-  //   });
-  // };
-
-  // const stopWrestling = (login: string) => {
-  //   request.get(`${ROOT_API}/api/rest/wrestle/stopWrestling?login=${login}`).then(res => {
-  //     console.log(res.body);
-  //   });
-  // };
-
-  // const trade = (login: string) => {
-  //   request.get(`${ROOT_API}/api/rest/account/trade/${login}`).then(res => {
-  //     console.log(res.body);
-  //   });
-  // };
-
   return (
     <div className="dashboard">
       <div className="left-panel">
