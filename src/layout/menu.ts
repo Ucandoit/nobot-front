@@ -10,6 +10,11 @@ const menu = [
     icon: 'mail'
   },
   {
+    name: 'Account Configs',
+    to: '/accounts/configs',
+    icon: 'mail'
+  },
+  {
     name: 'War',
     to: '/war',
     icon: 'mail'

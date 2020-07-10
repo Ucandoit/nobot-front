@@ -12,7 +12,7 @@ import RecruitSystem from './components/recruit/RecruitSystem';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
-import { CardList, MobileAccountCreate, Sell, SellStateList, Story } from './pages';
+import { AccountConfigList, CardList, MobileAccountCreate, Sell, SellStateList, Story } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +69,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path={`/account/edit/:login`}>
                   <AccountForm isCreate={false} />
+                </Route>
+                <Route exact path="/accounts/configs">
+                  <AccountConfigList />
                 </Route>
                 <Route exact path="/war">
                   <WarList />

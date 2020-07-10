@@ -12,13 +12,13 @@ export const useTable = <T>(
   { sort: initialSort, order: initialOrder, filters: initialFilters }: InitialOptions<T>,
   filterFields: FilterField<T>[],
   fetchData: (...args: any[]) => Promise<ListAndCount<T>>
-): TableProps<T> => {
+): [TableProps<T>, () => void] => {
   const paginationOption = usePagination();
   const sortOption = useSort(initialSort, initialOrder);
   const filterOptions = useFilter<T>(filterFields, initialFilters);
   const { page, size } = paginationOption;
   const { sort, order } = sortOption;
-  const [records] = useAsyncFunction<ListAndCount<T>>(
+  const [records, , , reload] = useAsyncFunction<ListAndCount<T>>(
     fetchData,
     initialValue as ListAndCount<T>,
     page,
@@ -27,5 +27,5 @@ export const useTable = <T>(
     order,
     filterOptions.filters
   );
-  return { columns, records, paginationOption, sortOption, filterOptions };
+  return [{ columns, records, paginationOption, sortOption, filterOptions }, reload];
 };

@@ -44,7 +44,7 @@ const filterFields: FilterField<SellState>[] = [
   }
 ];
 const SellStateList = () => {
-  const tableOptions = useTable<SellState>(
+  const [tableOptions] = useTable<SellState>(
     columns,
     { sort: 'postDate', order: 'desc', filters: { status: 'SELLING' } },
     filterFields,

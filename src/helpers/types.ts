@@ -142,3 +142,10 @@ export interface AccountCard {
   card: Card;
   login: string;
 }
+
+export interface AccountConfig {
+  login: string;
+  building: boolean;
+  training: boolean;
+  dailyLogin: boolean;
+}
