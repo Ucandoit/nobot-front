@@ -1,4 +1,5 @@
 import React from 'react';
+import { CardPool } from '../card';
 import { VillageInfo } from '../helpers';
 import Buildings from './Buildings';
 import Resources from './Resources';
@@ -14,6 +15,8 @@ const Village: React.FC<VillageProps> = ({ village }) => {
         <>
           <Resources resources={village.resourceInfo} />
           <Buildings areas={village.areas} />
+          <CardPool cards={village.deckCards} />
+          <CardPool cards={village.reserveCards} />
         </>
       ) : null}
     </>

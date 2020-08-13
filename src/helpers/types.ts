@@ -177,10 +177,13 @@ export interface ResourceInfo {
 export interface CardFace {
   id: number;
   faceUrl: string;
+  action: boolean;
+  trading: boolean;
 }
 
 export interface VillageInfo {
   resourceInfo: ResourceInfo;
   areas: MapArea[];
   deckCards: CardFace[];
+  reserveCards: CardFace[];
 }
