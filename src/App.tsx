@@ -11,6 +11,7 @@ import RecruitSystem from './components/recruit/RecruitSystem';
 import WarAdd from './components/war/WarAdd';
 import WarList from './components/war/WarList';
 import { AppBar, SideBar } from './layout';
+import { MobileMenuContextProvider } from './layout/mobileMenuContext';
 import { CardList, Dashboard, MobileAccountCreate, Sell, SellStateList, Story } from './pages';
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -49,62 +50,64 @@ const App: React.FC = () => {
     <BrowserRouter basename="">
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <AppBar />
-          <main className={classes.contentWithSidebar}>
-            <SideBar />
-            <Container>
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/dashboard" />
-                </Route>
-                <Route path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route exact path="/accounts">
-                  <Accounts />
-                </Route>
-                <Route path={`/account/create`}>
-                  <AccountForm isCreate={true} />
-                </Route>
-                <Route path={`/account/edit/:login`}>
-                  <AccountForm isCreate={false} />
-                </Route>
-                <Route exact path="/war">
-                  <WarList />
-                </Route>
-                <Route path="/war/create">
-                  <WarAdd />
-                </Route>
-                <Route path="/auction_history">
-                  <AuctionHistory />
-                </Route>
-                <Route path="/story">
-                  <Story />
-                </Route>
-                <Route path="/draw_card">
-                  <DrawCard />
-                </Route>
-                <Route path="/recruit">
-                  <RecruitSystem />
-                </Route>
-                <Route exact path="/cards">
-                  <CardList />
-                </Route>
-                <Route path="/cards/:id">
-                  <CardEdit />
-                </Route>
-                <Route exact path="/auction/sell">
-                  <Sell />
-                </Route>
-                <Route path="/auction/sell/status">
-                  <SellStateList />
-                </Route>
-                <Route path="/account/mobile/create">
-                  <MobileAccountCreate />
-                </Route>
-              </Switch>
-            </Container>
-          </main>
+          <MobileMenuContextProvider>
+            <AppBar />
+            <main className={classes.contentWithSidebar}>
+              <SideBar />
+              <Container>
+                <Switch>
+                  <Route exact path="/">
+                    <Redirect to="/dashboard" />
+                  </Route>
+                  <Route path="/dashboard">
+                    <Dashboard />
+                  </Route>
+                  <Route exact path="/accounts">
+                    <Accounts />
+                  </Route>
+                  <Route path={`/account/create`}>
+                    <AccountForm isCreate={true} />
+                  </Route>
+                  <Route path={`/account/edit/:login`}>
+                    <AccountForm isCreate={false} />
+                  </Route>
+                  <Route exact path="/war">
+                    <WarList />
+                  </Route>
+                  <Route path="/war/create">
+                    <WarAdd />
+                  </Route>
+                  <Route path="/auction_history">
+                    <AuctionHistory />
+                  </Route>
+                  <Route path="/story">
+                    <Story />
+                  </Route>
+                  <Route path="/draw_card">
+                    <DrawCard />
+                  </Route>
+                  <Route path="/recruit">
+                    <RecruitSystem />
+                  </Route>
+                  <Route exact path="/cards">
+                    <CardList />
+                  </Route>
+                  <Route path="/cards/:id">
+                    <CardEdit />
+                  </Route>
+                  <Route exact path="/auction/sell">
+                    <Sell />
+                  </Route>
+                  <Route path="/auction/sell/status">
+                    <SellStateList />
+                  </Route>
+                  <Route path="/account/mobile/create">
+                    <MobileAccountCreate />
+                  </Route>
+                </Switch>
+              </Container>
+            </main>
+          </MobileMenuContextProvider>
         </div>
       </div>
     </BrowserRouter>
