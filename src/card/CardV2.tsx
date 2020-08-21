@@ -1,8 +1,10 @@
-import { Card as MuiCard, CardContent, makeStyles } from '@material-ui/core';
-import React, { useCallback } from 'react';
+import { Card as MuiCard, CardContent, Icon, IconButton, makeStyles } from '@material-ui/core';
+import React, { useCallback, useContext } from 'react';
+import { toggleFavorite } from '../api';
 import { CardFace } from '../helpers';
 import actionImg from '../img/action.png';
 import tradingImg from '../img/trading.png';
+import { accountContext } from '../village';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -26,6 +28,9 @@ const useStyles = makeStyles(theme => ({
     right: '0',
     marginLeft: 'auto',
     marginRight: 'auto'
+  },
+  buttons: {
+    textAlign: 'left'
   }
 }));
 
@@ -34,13 +39,17 @@ interface CardProps {
   selectCard?: (id: number) => void;
 }
 
-const Card = ({ card: { id, faceUrl, trading, action }, selectCard }: CardProps) => {
+const Card = ({ card: { id, faceUrl, trading, action, favorite }, selectCard }: CardProps) => {
   const classes = useStyles();
   const onCardClick = useCallback(() => {
     if (selectCard) {
       selectCard(id);
     }
   }, [id, selectCard]);
+  const { account } = useContext(accountContext);
+  const onFavoriteClick = useCallback(async () => {
+    await toggleFavorite(account, id, !favorite);
+  }, [account, favorite, id]);
   return (
     <MuiCard className={classes.card} onClick={onCardClick}>
       <CardContent className={classes.cardContent}>
@@ -51,6 +60,11 @@ const Card = ({ card: { id, faceUrl, trading, action }, selectCard }: CardProps)
           ) : action ? (
             <img src={actionImg} className={classes.trading} alt="action" />
           ) : null}
+        </div>
+        <div className={classes.buttons}>
+          <IconButton aria-label={favorite ? 'unstar' : 'star'} color="primary" size="small" onClick={onFavoriteClick}>
+            <Icon fontSize="small">{favorite ? 'star' : 'star_border'}</Icon>
+          </IconButton>
         </div>
       </CardContent>
     </MuiCard>

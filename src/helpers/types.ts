@@ -179,6 +179,7 @@ export interface CardFace {
   faceUrl: string;
   action: boolean;
   trading: boolean;
+  favorite: boolean;
 }
 
 export interface VillageInfo {

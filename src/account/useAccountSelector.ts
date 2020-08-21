@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
-import { AccountSelectorProps } from './AccountSelector';
 
-const useAccountSelector = (): AccountSelectorProps => {
+const useAccountSelector = () => {
   const [selectedAccount, setSelectedAccount] = useState<string>('');
   const changeAccount = useCallback((login: string) => {
     setSelectedAccount(login);

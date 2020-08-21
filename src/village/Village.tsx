@@ -1,17 +1,27 @@
-import React from 'react';
+import { LinearProgress, makeStyles } from '@material-ui/core';
+import React, { useContext } from 'react';
+import { getVillage } from '../api';
 import { CardPool } from '../card';
-import { VillageInfo } from '../helpers';
+import { useAsyncFunction } from '../helpers';
+import accountContext from './accountContext';
 import Buildings from './Buildings';
 import Resources from './Resources';
 
-interface VillageProps {
-  village?: VillageInfo;
-}
+const useStyles = makeStyles({
+  progress: {
+    width: '100%'
+  }
+});
 
-const Village: React.FC<VillageProps> = ({ village }) => {
+const Village: React.FC = () => {
+  const classes = useStyles();
+  const { account } = useContext(accountContext);
+  const [village, loading] = useAsyncFunction(getVillage, undefined, account);
   return (
     <>
-      {village ? (
+      {loading ? (
+        <LinearProgress className={classes.progress} />
+      ) : village ? (
         <>
           <Resources resources={village.resourceInfo} />
           <Buildings areas={village.areas} />

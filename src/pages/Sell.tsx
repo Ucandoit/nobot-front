@@ -59,7 +59,7 @@ const Sell = () => {
   return (
     <>
       <Link to="/auction/sell/status">Status</Link>
-      <AccountSelector selectedAccount={selectedAccount} changeAccount={changeAccount} />
+      <AccountSelector />
       {loadingReserveCards ? (
         <LinearProgress className={classes.progress} />
       ) : (

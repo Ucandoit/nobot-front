@@ -9,7 +9,7 @@ interface CardPoolProps {
 
 const CardPool = ({ cards }: CardPoolProps) => {
   return (
-    <Grid container justify="flex-start">
+    <Grid container justify="center">
       {cards.map(card => (
         <CardV2 key={card.id} card={card} />
       ))}

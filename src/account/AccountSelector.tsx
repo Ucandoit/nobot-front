@@ -2,9 +2,10 @@ import { FormControl, Grid, IconButton, InputLabel, makeStyles, MenuItem, Select
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import moment from 'moment';
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useContext, useEffect, useState } from 'react';
 import request from 'superagent';
 import { AccountInfo } from '../helpers';
+import { accountContext } from '../village';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -19,12 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export interface AccountSelectorProps {
-  selectedAccount: string;
-  changeAccount: (login: string) => void;
-}
-
-const AccountSelector = ({ selectedAccount, changeAccount }: AccountSelectorProps) => {
+const AccountSelector: React.FC = () => {
   const now = moment.now();
 
   const classes = useStyles();
@@ -40,11 +36,13 @@ const AccountSelector = ({ selectedAccount, changeAccount }: AccountSelectorProp
     getAccounts();
   }, [getAccounts]);
 
+  const { account, setAccount } = useContext(accountContext);
+
   const handleChange = useCallback(
     (event: ChangeEvent<{ value: unknown }>) => {
-      changeAccount(event.target.value as string);
+      setAccount(event.target.value as string);
     },
-    [changeAccount]
+    [setAccount]
   );
 
   const checkExpired = useCallback(expirationDate => moment(expirationDate).isBefore(now), [now]);
@@ -57,7 +55,7 @@ const AccountSelector = ({ selectedAccount, changeAccount }: AccountSelectorProp
       <Grid item xs={4} className={classes.selectWrapper}>
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="account-label">Account</InputLabel>
-          <Select labelId="account-label" id="account" value={selectedAccount} onChange={handleChange} label="Account">
+          <Select labelId="account-label" id="account" value={account} onChange={handleChange} label="Account">
             {accounts.map(account => (
               <MenuItem key={account.login} value={account.login} disabled={checkExpired(account.expirationDate)}>
                 {account.login}
