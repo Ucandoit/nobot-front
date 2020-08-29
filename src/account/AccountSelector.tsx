@@ -47,9 +47,23 @@ const AccountSelector: React.FC = () => {
 
   const checkExpired = useCallback(expirationDate => moment(expirationDate).isBefore(now), [now]);
 
+  const previousAccount = useCallback(() => {
+    const index = accounts.findIndex(acc => acc.login === account);
+    if (index !== 0) {
+      setAccount(accounts[index - 1].login);
+    }
+  }, [account, accounts, setAccount]);
+
+  const nextAccount = useCallback(() => {
+    const index = accounts.findIndex(acc => acc.login === account);
+    if (index !== accounts.length - 1) {
+      setAccount(accounts[index + 1].login);
+    }
+  }, [account, accounts, setAccount]);
+
   return (
     <Grid container justify="space-between">
-      <IconButton aria-label="back">
+      <IconButton aria-label="back" onClick={previousAccount}>
         <KeyboardArrowLeftIcon className={classes.icon} />
       </IconButton>
       <Grid item xs={4} className={classes.selectWrapper}>
@@ -64,7 +78,7 @@ const AccountSelector: React.FC = () => {
           </Select>
         </FormControl>
       </Grid>
-      <IconButton aria-label="next">
+      <IconButton aria-label="next" onClick={nextAccount}>
         <KeyboardArrowRightIcon className={classes.icon} />
       </IconButton>
     </Grid>
